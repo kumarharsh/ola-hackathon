@@ -27,6 +27,7 @@
   "dependencies": {
     "fbjs": "^0.2.1",
     "history": "^1.11.0",
+    "isomorphic-fetch": "^2.1.1",
     "material-ui": "^0.12.0",
     "mongodb": "^2.0.43",
     "playlyfe": "^0.4.3",
