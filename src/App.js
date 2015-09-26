@@ -1,40 +1,19 @@
+import 'react-tap-event-plugin'; // import for tap events
 import React, { Component } from 'react';
-import { NICE, SUPER_NICE } from './colors';
-import { RaisedButton }from 'material-ui'
 
-class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { counter: 0 };
-    this.interval = setInterval(() => this.tick(), 1000);
-  }
+import RaisedButton from 'material-ui/lib/raised-button';
+import { AppBar, IconMenu, MenuItem, IconButton } from 'material-ui';
+import { Link } from 'react-router';
 
-  tick() {
-    this.setState({
-      counter: this.state.counter + this.props.increment
-    });
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  render() {
-    return (
-      <h1 style={{ color: this.props.color }}>
-        Counter ({this.props.increment}): {this.state.counter}
-      </h1>
-    );
-  }
-}
-
-export class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <div>
-        <RaisedButton label="Default" />
-        <Counter increment={12} color={NICE} />
-        <Counter increment={5} color={SUPER_NICE} />
+        <AppBar
+          title="Title"
+          iconElementRight={UserMenu} />
+        <Link to="/login">Login</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </div>
     );
   }
