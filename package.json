@@ -6,7 +6,6 @@
     "build": "npm run clean && npm run build:webpack",
     "start": "node server.js",
     "database": "docker run --net host --name mongodb mongo:3.1.8"
-
   },
   "devDependencies": {
     "babel-core": "^5.4.7",
@@ -29,6 +28,7 @@
     "fbjs": "^0.2.1",
     "material-ui": "^0.12.0",
     "mongodb": "^2.0.43",
+    "playlyfe": "^0.4.3",
     "raf": "^3.1.0",
     "react": "^0.13.0",
     "react-dom": "^0.14.0-rc1",

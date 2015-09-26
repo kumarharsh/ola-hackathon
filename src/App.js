@@ -10,8 +10,7 @@ export default class App extends Component {
     return (
       <div>
         <AppBar
-          title="Title"
-          iconElementRight={UserMenu} />
+          title="Title"/>
         <Link to="/login">Login</Link>
         <Link to="/dashboard">Dashboard</Link>
       </div>
