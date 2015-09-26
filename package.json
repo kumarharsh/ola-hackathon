@@ -25,6 +25,8 @@
     "webpack-hot-middleware": "^2.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.14.0",
+    "cookie-parser": "^1.4.0",
     "express-session": "^1.11.3",
     "fbjs": "^0.2.1",
     "history": "^1.11.0",

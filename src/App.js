@@ -16,6 +16,8 @@ export default class App extends Base {
           title="Title"/>
         <Link to="/login">Login</Link>
         <Link to="/dashboard">Dashboard</Link>
+        <Link to="/reward">Reward</Link>
+        <Link to="/share">Share</Link>
       </div>
     );
   }

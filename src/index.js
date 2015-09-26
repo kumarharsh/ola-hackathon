@@ -2,6 +2,10 @@ import React from 'react';
 import App from './App';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Reward from './components/Reward';
+import Share from './components/Share';
+import Driver from './components/Driver';
+
 import { Router, Route, Redirect } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import OlaApi from './Services/OlaApi';
@@ -26,7 +30,11 @@ React.render(
       <Redirect from="/team34" to="/" />
       {/* authorized routes */}
       <Route path="/dashboard" component={Dashboard} />
+
+      <Route path="/share" component={Share} />
     </Route>
+    <Route path="/reward" component={Reward} />
+    <Route path="/driver" component={Driver} />
     <Route path="/login" component={Login} />
   </Router>,
   document.getElementById('root')
