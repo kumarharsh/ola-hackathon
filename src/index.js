@@ -22,8 +22,8 @@ function requireAuth(nextState, replaceState) {
 
 React.render(
   <Router history={createBrowserHistory()}>
-    <Redirect from="/" to="/team34" />
-    <Route path="/team34" component={App} onEnter={requireAuth}>
+    <Route path="/" component={App} onEnter={requireAuth}>
+      <Redirect from="/team34" to="/" />
       {/* authorized routes */}
       <Route path="/dashboard" component={Dashboard} />
     </Route>
