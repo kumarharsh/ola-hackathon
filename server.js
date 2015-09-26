@@ -77,12 +77,12 @@ MongoClient.connect('mongodb://localhost:27017/core', function(err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
   tracks_mgc = db.collection('tester')
-    app.listen(3000, 'localhost', function(err) {
+    app.listen(80, 'localhost', function(err) {
     if (err) {
       console.log(err);
       return;
     }
-    console.log('Listening at http://localhost:3000');
+    console.log('Listening at http://localhost');
   });
 });
 
