@@ -1,11 +1,14 @@
 import 'react-tap-event-plugin'; // import for tap events
-import React, { Component } from 'react';
+import React from 'react/addons';
+import Base from './Base';
 
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import AppTheme from './theme';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { AppBar, IconMenu, MenuItem, IconButton } from 'material-ui';
 import { Link } from 'react-router';
 
-export default class App extends Component {
+export default class App extends Base {
   render() {
     return (
       <div>
