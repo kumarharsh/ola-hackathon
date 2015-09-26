@@ -1,10 +1,12 @@
 var path = require('path')
 var express = require('express')
+var session = require('express-session')
 var webpack = require('webpack')
 var config = require('./webpack.config.dev')
 var Playlyfe = require('playlyfe').Playlyfe;
 var PlaylyfeException = require('playlyfe').PlaylyfeException;
 var MongoClient = require('mongodb').MongoClient
+var moment = require('moment')
 var assert = require('assert')
 var tracks_mgc
 
@@ -25,6 +27,14 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use('/public', express.static(__dirname + '/public'));
 app.use(require('webpack-hot-middleware')(compiler));
+
+app.use(session({ resave: true, saveUninitialized: false, secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+app.use(function(req, res, next) {
+  if (!req.session.user) {
+    req.session.user_id = 1
+  }
+  next()
+})
 
 app.all('/api/*', function(req, res) {
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -55,29 +65,49 @@ app.all('/api/*', function(req, res) {
 })
 
 app.get('/end', function(req, res) {
-  tracks_mgc.save({gello: 1}, function(err, docs) {
-    assert.equal(err, null);
-    res.status(200).json({ ok: 1})
+  tracks_mgc.update({ user_id: req.session.user_id, year: 2015 }, { $push: { streak: 1 } }, { upsert: true}, function(err, doc) {
+    if (err) {
+      return res.status(500).json({err: err})
+    }
+    return res.status(200).json({ ok: 1})
   })
 });
 
 app.get('/history', function(req, res) {
-  tracks_mgc.find({}).toArray(function(err, docs) {
-    assert.equal(err, null);
-    res.status(200).json(docs)
-  });
-
+  // tracks_mgc.find({ user_id: req.session.user_id, year: 2015 }).toArray(function(err, docs) {
+  // });
+  tracks_mgc.findOne({ user_id: req.session.user_id, year: 2015 }, function(err, doc) {
+    if (err) {
+      return res.status(500).json({err: err})
+    }
+    count = 0
+    no_of_weeks = 4
+    for(var i=doc.streak.length-1;i>= Math.max(0, doc.streak.length-no_of_weeks);i--) {
+      if (doc.streak[i] === 1) {
+        count += 1
+      } else {
+        count = 0
+      }
+    }
+    return res.status(200).json({ streak: count })
+  })
 });
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// take a ride
+// share fb
+// share twit
+// schedule it
+// prefer driver -> rating of driver -> you just pick a driver who is close to you
+
 MongoClient.connect('mongodb://localhost:27017/core', function(err, db) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
-  tracks_mgc = db.collection('tester')
-    app.listen(80, 'localhost', function(err) {
+  tracks_mgc = db.collection('tracks')
+  app.listen(80, 'localhost', function(err) {
     if (err) {
       console.log(err);
       return;
