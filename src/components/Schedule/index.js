@@ -1,5 +1,6 @@
 import React from 'react';
 import Base from '../../Base';
+import moment from 'moment';
 
 import {
   AppBar,
@@ -13,6 +14,7 @@ import {
   TimePicker,
   FontIcon,
   Paper,
+  ListDivider,
 } from 'material-ui';
 
 import {schedule} from './service'
@@ -61,7 +63,19 @@ export default class Dashboard extends Base {
     console.log(list);
     if (list.length !== 0) {
       const scheduleListItems = list.map((item) => {
-        return <ListItem primaryText={item.name} />;
+        return (
+          <div>
+            <ListItem primaryText={item.name}
+              secondaryText={
+                 <p>
+                  <b>From</b>: {item.pickup} To: {item.end}<br />
+                  <b>Time</b>: {moment(item.time).format("h:mm a")} <br />
+                  <b>Phone No.</b>: {item.ph}
+                </p>
+              }/>
+            <ListDivider />
+          </div>
+        );
       });
       scheduleList = <List>{scheduleListItems}</List>;
     } else {

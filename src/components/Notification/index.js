@@ -2,13 +2,17 @@ import React from 'react';
 import Base from '../../Base';
 
 import ScheduleService, {schedule} from '../Schedule/service';
-import { Paper, FlatButton } from 'material-ui';
+import { Paper, FlatButton, RaisedButton } from 'material-ui';
 import History from '../../Services/hist';
+import moment from 'moment';
 
 export default class Notification extends Base {
   state = {
     visible: false,
-    data: {}
+    data: {
+      schedule_item: {},
+      cab: {}
+    }
   }
 
   componentDidMount() {
@@ -34,18 +38,24 @@ export default class Notification extends Base {
       position: 'fixed',
       top: '0px',
       width: '100%',
-      height: '200px',
       zIndex: '1000',
       display: this.state.visible ? null : 'none',
+      padding: '10px'
     };
 
+    const {schedule_item, cab} = this.state.data;
     return (
       <Paper zDepth={4} style={styles}>
-        <h3> Notification </h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque omnis officiis iste facilis nihil, quam nemo sequi eius, aut dolor at, odit eum amet saepe porro iure mollitia excepturi corrupti!</p>
-        <div>
-          <FlatButton linkButton={true} onClick={this._closeNotification}>Book</FlatButton>
-          <FlatButton linkButton={true} onClick={this._dismissNotification}>Dismiss</FlatButton>
+        <p>
+          <b>Name</b>: {schedule_item.name} <br />
+          <b>From</b>: {schedule_item.pickup} To: {schedule_item.end}<br />
+          <b>Time</b>: {moment(schedule_item.time).format("h:mm a")} <br />
+          <b>Phone No.</b>: {schedule_item.ph}
+        </p>
+        <p><b>There is an ola cab availabe. Do you want to book it?</b></p>
+        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <RaisedButton linkButton={true} onClick={this._closeNotification} secondary={true} label={"Book"} />
+          <FlatButton linkButton={true} onClick={this._dismissNotification} label={"Dismis"} />
         </div>
       </Paper>
     );

@@ -6,7 +6,9 @@ export const schedule = {
   getList() {
     let list = localStorage.getItem(this.key)
     if (list) {
-      return JSON.parse(list);
+      list = JSON.parse(list);
+      list = list.filter((item) => { return item.name; });
+      return list;
     } else {
       return [];
     }
