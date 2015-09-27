@@ -50,7 +50,8 @@ export default class Notification extends Base {
           <b>Name</b>: {schedule_item.name} <br />
           <b>From</b>: {schedule_item.pickup} To: {schedule_item.end}<br />
           <b>Time</b>: {moment(schedule_item.time).format("h:mm a")} <br />
-          <b>Phone No.</b>: {schedule_item.ph}
+          <div style={{display:schedule_item.tp_name ? 'inline' : 'none'}}><b>Name</b>: {schedule_item.tp_name}</div>
+          <div style={{display:schedule_item.ph ? 'inline' : 'none'}}><b>Phone No.</b>: {schedule_item.ph}</div>
         </p>
         <p><b>There is an ola cab availabe. Do you want to book it?</b></p>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>

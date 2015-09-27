@@ -151,8 +151,8 @@ export default class Dashboard extends Base {
           <TextField
             style={fullWidth}
             floatingLabelText="Name (Optional)"
-            onChange={this._handleValueChange.bind(null, 'ph')}
-            value={this.state.form.ph}
+            onChange={this._handleValueChange.bind(null, 'tp_name')}
+            value={this.state.form.tp_name}
           />
           <TextField
             style={fullWidth}
