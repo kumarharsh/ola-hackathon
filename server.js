@@ -1,3 +1,5 @@
+require('es6-promise').polyfill();
+
 var path = require('path')
 var express = require('express')
 var session = require('express-session')
@@ -12,6 +14,7 @@ var MongoClient = require('mongodb').MongoClient
 var moment = require('moment')
 var assert = require('assert')
 var tracks_mgc
+
 
 var app = express();
 var compiler = webpack(config);
@@ -113,6 +116,9 @@ function calculateStreak(req, cb) {
     }
     count = 0
     no_of_weeks = 4
+    if (!doc) {
+      return cb(null, 0);
+    }
     for(var i=doc.streak.length-1;i>= Math.max(0, doc.streak.length-no_of_weeks);i--) {
       if (doc.streak[i] === 1) {
         count += 1
