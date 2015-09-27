@@ -21,7 +21,7 @@ export const schedule = {
 };
 
 function checkOlaCab({lat, long}) {
-  return OlaApi.client.api(`/v1/products?pickup_lat=${lat}&pickup_long=${long}`, 'GET')
+  return OlaApi.client.api(`/v1/products?pickup_lat=${lat}&pickup_lng=${long}`, 'GET')
   .then((res) => { return res.json(); })
   .then(({categories}) => {
     if(!categories) {

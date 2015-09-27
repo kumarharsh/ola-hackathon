@@ -19,7 +19,7 @@ export default class App extends Base {
 
   render() {
     var menuItems = [
-      { type: MenuItem.Types.LINK, text: 'Dashboard', payload: '/dashboard' },
+      { type: MenuItem.Types.LINK, text: 'Ride Now', payload: '/ride_now' },
       { type: MenuItem.Types.LINK, text: 'Profile', payload: '/profile' },
       { type: MenuItem.Types.LINK, text: 'Schedule', payload: '/schedule' },
       { type: MenuItem.Types.LINK, text: 'Reward Store', payload: '/reward-store' },

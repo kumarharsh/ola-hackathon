@@ -68,7 +68,7 @@ class Logout extends React.Component {
 React.render(
   <Router history={History}>
     <Route path="/" component={App} onEnter={requireAuth}>
-      <Redirect from="/team34" to="/dashboard" />
+      <Redirect from="/team34" to="/ride_now" />
       {/* authorized routes */}
       <Route path="/ride_now" component={Dashboard}/>
       <Route path="/schedule" component={Schedule}/>
