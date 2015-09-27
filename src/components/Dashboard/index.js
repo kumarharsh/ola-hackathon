@@ -43,8 +43,8 @@ export default class Dashboard extends Base {
       ola_points = pt_metric.value;
     }
     return (
-      <div>
-        <div style={{height:'100vh', display:'flex', flexDirection:'column'}}>
+      <div style={{height:'100%'}}>
+        <div style={{height:'100%', display:'flex', flexDirection:'column'}}>
           <div className="user-profile" style={{backgroundColor: others.grey800, borderBottom:'2px solid ' + OLA, padding:'0 1em'}}>
             <Link to={'/dashboard'} style={{display:'flex', height:'100%', color: others.white, textDecoration:'none'}}>
               <div className="avatar" style={{borderRadius:'50%', width: user.avatar.medium.width, height: user.avatar.medium.height, overflow:'hidden', flexGrow:0, margin:'1em 0'}}>
@@ -62,7 +62,7 @@ export default class Dashboard extends Base {
               </div>
             </Link>
           </div>
-          <div className="MAP" style={{flex:'1 0 300px'}}>
+          <div className="MAP" style={{flex:'1 0 auto'}}>
             <RideMap />
           </div>
           <div className="ride-status">

@@ -88,7 +88,7 @@ export default class RideMap extends Component {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         },
-        content: 'Here',
+        content: 'You Are Here',
       });
 
       const tick = () => {
@@ -127,7 +127,7 @@ export default class RideMap extends Component {
     }
 
     return (
-      <section style={{height: '450px'}}>
+      <section style={{height: '100%'}}>
         <GoogleMap containerProps={{
             style: {
               height: '100%',

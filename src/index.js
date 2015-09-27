@@ -3,6 +3,7 @@ import App from './App';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Reward from './components/Reward';
+import RewardStore from './components/RewardStore';
 import Feedback from './components/Feedback';
 import Driver from './components/Driver';
 import Profile from './components/Profile';
@@ -74,6 +75,7 @@ React.render(
       <Route path="/profile" component={Profile} />
       <Route path="/feedback" component={Feedback} />
       <Route path="/reward" component={Reward} />
+      <Route path="/reward-store" component={RewardStore} />
       <Route path="/driver" component={Driver} />
       <Route path="/logout" component={Logout} onEnter={logout} />
     </Route>
