@@ -2,7 +2,7 @@ import React from 'react';
 import Base from '../../Base';
 
 import { List, ListItem, TextField } from 'material-ui';
-import fetch from 'isomorphic-fetch';
+import OlaApi from '../../Services/OlaApi';
 
 var client_located_url = '/ola/v1/sandbox/client_located?';
 var start_trip_url = '/ola/v1/sandbox/start_trip?';
@@ -16,19 +16,19 @@ export default class Driver extends Base {
     super()
     this.state = { crn: 0 }
     this.ready = () => {
-      fetch(ready_booking_url);
+      OlaApi.client.api(ready_booking_url, 'GET');
     };
     this.startTrip = () => {
-      fetch(start_trip_url+'crn='+this.state.crn);
+      OlaApi.client.api(start_trip_url+'crn='+this.state.crn, 'GET');
     };
     this.endTrip = () => {
-      fetch(end_trip_url+'crn='+this.state.crn);
+      OlaApi.client.api(end_trip_url+'crn='+this.state.crn, 'GET');
     };
     this.clientLocated = () => {
-      fetch(client_located_url+'crn='+this.state.crn);
+      OlaApi.client.api(client_located_url+'crn='+this.state.crn, 'GET');
     };
     this.getImei = () => {
-      fetch(get_imei_url+'crn='+this.state.crn);
+      OlaApi.client.api(get_imei_url+'crn='+this.state.crn, 'GET');
     };
     this.onCRN = (event) => {
       this.setState({ crn: event.target.value })
