@@ -6,21 +6,19 @@ import {
   List,
   ListItem,
   FloatingActionButton,
+  RaisedButton,
   FlatButton,
-  Dialog,
   TextField,
   SelectField,
+  TimePicker,
 } from 'material-ui';
 
 export default class Dashboard extends Base {
 
   state = {
     selectValue: undefined,
-    formOpen: false
-  };
-
-  _handleSelectValueChange = (e) => {
-    this.setState({selectValue: e.target.value});
+    formOpen: false,
+    form: {},
   };
 
   render() {
@@ -35,7 +33,7 @@ export default class Dashboard extends Base {
         onTouchTap={this._handleCustomDialogSubmit} />
     ];
 
-    let menuItems = [
+    let categoryItems = [
       { payload: '1', text: 'Social' },
       { payload: '2', text: 'Restaurants' },
       { payload: '3', text: 'Theaters' },
@@ -72,26 +70,56 @@ export default class Dashboard extends Base {
           <FloatingActionButton onClick={this._openForm} />
         </div>
         <div style={{display: this.state.formOpen ? null : 'none'}}>
-          <TextField hintText="" />
+          <TextField
+            hintText="Pickup Point"
+            onChange={this._handleValueChange.bind(null, 'pickup')}
+            value={this.state.form.pickup}
+          />
           <TextField hintText="Hint Text" />
           <TextField hintText="Hint Text" />
+          <TimePicker
+            onChange={this._handleTimeChange}
+            format="ampm"
+            hintText="12hr Format" />
           <SelectField
-            onChange={this._handleSelectValueChange}
-            value={this.state.selectValue}
+            onChange={this._handleValueChange.bind(null, 'category')}
+            value={this.state.form.category}
             hintText="Hint Text"
-            menuItems={menuItems} />
+            menuItems={categoryItems} />
           <SelectField
-            onChange={this._handleSelectValueChange}
-            value={this.state.selectValue}
+            onChange={this._handleValueChange.bind(null, 'repeat')}
+            value={this.state.form.repeat}
             hintText="Hint Text"
             menuItems={timeItems} />
+
+          <RaisedButton label="Add"  onClick={this._add} />
+          <FlatButton label="Cancel" onClick={this._cancelAdd} />
+
         </div>
       </div>
     );
   }
 
+  _add = () => {
+    console.log(this.state.form);
+  }
+
+  _cancelAdd = () => {
+    this.setState({formOpen: false, form: {}});
+  }
+
   _openForm = () => {
     this.setState({formOpen: true});
+  };
+
+  _handleTimeChange = (x, time) => {
+    this.state.from['time'] = time
+    this.set
+  }
+
+  _handleValueChange = (name, e) => {
+    this.state.form[name] = e.target.value;
+    this.setState({form: this.state.form});
   };
 
   _addSchedule() {
