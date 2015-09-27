@@ -22,18 +22,18 @@ export default class Flame extends Base {
         [level1, level2, level3] = [others.yellow500, others.orange500, others.red500]
         break;
       case 4:
-        [level1, level2, level3] = [others.faintBlack, others.transparent, others.transparent]
+        [level1, level2, level3] = [others.darkWhite, others.transparent, others.transparent]
         break;
       case 5:
-        [level1, level2, level3] = [others.faintBlack, others.lightBlue500, others.transparent]
+        [level1, level2, level3] = [others.darkWhite, others.lightBlue500, others.transparent]
         break;
       default:
-        [level1, level2, level3] = [others.faintBlack, others.lightBlue500, others.blue600]
+        [level1, level2, level3] = [others.darkWhite, others.lightBlue500, others.blue600]
     }
-    console.log("STREAK", this.props.streak, level1, level2, level3);
 
     return (
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 197.236 244.186" width={this.props.width || 200}>
+      <div class='streak-flame' style={{position:'relative'}}>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 197.236 244.186" width={this.props.width || 200}>
         <g id="level3" fill={level3}>
           <path d="M194.145,144.871c-1.019-7.424-4.524-13.677-9.139-19.408
           c-2.576-3.415-5.285-6.709-7.02-10.713c-2.01-4.64-2.853-9.369-2.178-14.382c0.103-0.763,0.342-1.575-0.078-2.499
@@ -199,6 +199,8 @@ export default class Flame extends Base {
           <polygon points="100.618,56.445 100.617,56.446 100.62,56.447"/>
         </g>
       </svg>
+      <div class="streak-value" style={{fontSize:'2rem', textAlign:'center', color:'white', textShadow:'0 0.1em 5px ' + others.lightBlack, position:'absolute', top:0, right:0}}>{this.props.streak}</div>
+      </div>
     );
   }
 }

@@ -4,11 +4,11 @@ import Base from '../../Base';
 import { AppBar } from 'material-ui';
 import { primary, others } from '../../colors';
 
-import Flame from '../streak/Flame';
+import Flame from '../Streak/Flame';
 
 export default class Dashboard extends Base {
   render() {
-    this.props.streak = 6;
+    this.props.streak = this.props.streak || 6;
     return (
       <div>
         <AppBar title="Dashboard"/>
@@ -20,7 +20,7 @@ export default class Dashboard extends Base {
           <h3 className="ola-points">750 Points</h3>
         </div>
         <div className="streak-wrapper" style={{padding:'0.1em 0', textAlign:'center'}}>
-          <h3>My Streak: <span>{this.props.streak}</span></h3>
+          <h3>My Streak</h3>
           <Flame streak={this.props.streak} width="100"/>
         </div>
         <div className="trophy-room" style={{padding:'0.1em 0', textAlign:'center'}}>
