@@ -47,23 +47,23 @@ export default class App extends Base {
     }
     return (
       <div>
-        <div className="user-profile" style={{backgroundColor: others.grey800, color: others.white, borderBottom:'2px solid ' + OLA, display:'flex', padding:'0 1em'}}>
-          <div className="avatar" style={{borderRadius:'50%', width: user.avatar.medium.width, height: user.avatar.medium.height, overflow:'hidden', flexGrow:0, margin:'1em 0'}}>
-            <img src={user.avatar.medium.url} alt={user.name} style={{maxWidth:'100%', maxWidth:"100%"}}/>
-          </div>
-          <div className="user-details" style={{flex:'1 0 auto', padding:'1em 0.5em 1em', borderRight:'1px solid ' + others.grey900}}>
-            <h3 className="user-name" style={{margin: 0}}>{user.name}</h3>
-          </div>
-          <div className="user-points" style={{textAlign:'center', padding:'1em 1em 0.5em', flex:'1 0 auto', borderLeft:'1px solid ' + others.grey700}}>
-            <div style={{fontSize:'3rem',fontWeight:'bold'}}>{ola_points}</div>
-            <div style={{fontSize:'1rem'}}>OLA Points</div>
-          </div>
-          <div className="streak" style={{flexGrow:0, padding:'1em 0'}}>
-            <Flame streak={user.streak} width="50"/>
-          </div>
+        <div className="user-profile" style={{backgroundColor: others.grey800, borderBottom:'2px solid ' + OLA, padding:'0 1em'}}>
+          <Link to={'/dashboard'} style={{display:'flex', height:'100%', color: others.white, textDecoration:'none'}}>
+            <div className="avatar" style={{borderRadius:'50%', width: user.avatar.medium.width, height: user.avatar.medium.height, overflow:'hidden', flexGrow:0, margin:'1em 0'}}>
+              <img src={user.avatar.medium.url} alt={user.name} style={{maxWidth:'100%', maxWidth:"100%"}}/>
+            </div>
+            <div className="user-details" style={{flex:'1 0 auto', padding:'1em 0.5em 1em', borderRight:'1px solid ' + others.grey900}}>
+              <h3 className="user-name" style={{margin: 0}}>{user.name}</h3>
+            </div>
+            <div className="user-points" style={{textAlign:'center', padding:'1em 1em 0.5em', flex:'1 0 auto', borderLeft:'1px solid ' + others.grey700}}>
+              <div style={{fontSize:'3rem',fontWeight:'bold'}}>{ola_points}</div>
+              <div style={{fontSize:'1rem'}}>OLA Points</div>
+            </div>
+            <div className="streak" style={{flexGrow:0, padding:'1em 0'}}>
+              <Flame streak={user.streak} width="50"/>
+            </div>
+          </Link>
         </div>
-        <Link to="/login">Login</Link>
-        <Link to="/dashboard">Dashboard</Link>
       </div>
     );
   }

@@ -32,7 +32,7 @@ export default class Flame extends Base {
     }
 
     return (
-      <div class='streak-flame' style={{position:'relative'}}>
+      <div className='streak-flame' style={{position:'relative'}}>
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 197.236 244.186" width={this.props.width || 200}>
         <g id="level3" fill={level3}>
           <path d="M194.145,144.871c-1.019-7.424-4.524-13.677-9.139-19.408
@@ -199,7 +199,7 @@ export default class Flame extends Base {
           <polygon points="100.618,56.445 100.617,56.446 100.62,56.447"/>
         </g>
       </svg>
-      <div class="streak-value" style={{fontSize:'2rem', textAlign:'center', color:'white', textShadow:'0 0.1em 5px ' + others.lightBlack, position:'absolute', top:0, right:0}}>{this.props.streak}</div>
+      <div className="streak-value" style={{fontSize:'2rem', textAlign:'center', color:'white', textShadow:'0 0.1em 5px ' + others.lightBlack, position:'absolute', top:0, right:0}}>{this.props.streak}</div>
       </div>
     );
   }
