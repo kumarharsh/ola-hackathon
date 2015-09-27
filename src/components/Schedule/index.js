@@ -1,5 +1,6 @@
 import React from 'react';
 import Base from '../../Base';
+import moment from 'moment';
 
 import {
   AppBar,
@@ -13,6 +14,7 @@ import {
   TimePicker,
   FontIcon,
   Paper,
+  ListDivider,
 } from 'material-ui';
 
 import {schedule} from './service'
@@ -38,15 +40,15 @@ export default class Dashboard extends Base {
     ];
 
     let categoryItems = [
-      { payload: '1', text: 'Social' },
-      { payload: '2', text: 'Restaurants' },
-      { payload: '3', text: 'Theaters' },
-      { payload: '4', text: 'Hotels' },
-      { payload: '5', text: 'Railways' },
-      { payload: '6', text: 'Airports' },
-      { payload: '7', text: 'Bus Stands' },
-      { payload: '8', text: 'School' },
-      { payload: '9', text: 'Hospital' },
+      { payload: '1', text: 'Office' },
+      { payload: '2', text: 'Personal' },
+      { payload: '3', text: 'Social' },
+      { payload: '4', text: 'Restaurants' },
+      { payload: '5', text: 'Theaters' },
+      { payload: '6', text: 'Hotels' },
+      { payload: '8', text: 'Airports' },
+      { payload: '10', text: 'School' },
+      { payload: '11', text: 'Hospital' },
     ];
 
     let timeItems = [
@@ -61,12 +63,24 @@ export default class Dashboard extends Base {
     console.log(list);
     if (list.length !== 0) {
       const scheduleListItems = list.map((item) => {
-        return <ListItem primaryText={item.name} />;
+        return (
+          <div>
+            <ListItem primaryText={item.name}
+              secondaryText={
+                 <p>
+                  <b>From</b>: {item.pickup} To: {item.end}<br />
+                  <b>Time</b>: {moment(item.time).format("h:mm a")} <br />
+                  <b>Phone No.</b>: {item.ph}
+                </p>
+              }/>
+            <ListDivider />
+          </div>
+        );
       });
       scheduleList = <List>{scheduleListItems}</List>;
     } else {
       scheduleList = (
-        <RaisedButton label={"Add"} onClick={this._add}>Mayank</RaisedButton>
+        <RaisedButton label={"Add"} onClick={this._add}>Add</RaisedButton>
       );
     }
 
@@ -100,7 +114,7 @@ export default class Dashboard extends Base {
         <Paper zIndex={3} style={formStyles} className="add_schedule_form">
           <TextField
             style={fullWidth}
-            floatingLabelText="Name"
+            floatingLabelText="Name your Schedule"
             onChange={this._handleValueChange.bind(null, 'name')}
             value={this.state.form.name}
           />
@@ -125,17 +139,24 @@ export default class Dashboard extends Base {
             style={fullWidth}
             onChange={this._handleValueChange.bind(null, 'category')}
             value={this.state.form.category}
-            hintText="Hint Text"
+            hintText="Category of this schedule"
             menuItems={categoryItems} />
           <SelectField
             style={fullWidth}
             onChange={this._handleValueChange.bind(null, 'repeat')}
             value={this.state.form.repeat}
-            hintText="Hint Text"
+            hintText="How often do you go here?"
             menuItems={timeItems} />
+
           <TextField
             style={fullWidth}
-            floatingLabelText="Phone No."
+            floatingLabelText="Name (Optional)"
+            onChange={this._handleValueChange.bind(null, 'tp_name')}
+            value={this.state.form.tp_name}
+          />
+          <TextField
+            style={fullWidth}
+            floatingLabelText="Phone No (Optional)"
             onChange={this._handleValueChange.bind(null, 'ph')}
             value={this.state.form.ph}
           />

@@ -6,7 +6,9 @@ export const schedule = {
   getList() {
     let list = localStorage.getItem(this.key)
     if (list) {
-      return JSON.parse(list);
+      list = JSON.parse(list);
+      list = list.filter((item) => { return item.name; });
+      return list;
     } else {
       return [];
     }
@@ -43,7 +45,7 @@ function checkOlaCab({lat, long}) {
 
 function canRequestCab(time) {
   const diff = (Date.now() - time);
-  const threshold = 5 * 60 * 10000;
+  const threshold = 5 * 60 * 1000;
   if (diff < threshold) {
     return true;
   } else {
