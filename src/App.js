@@ -43,7 +43,7 @@ export default class App extends Base {
       },
     ]
     var name = this.props.location.pathname.replace('/', '')
-    name = _s.titleize(name);
+    name = _s.titleize(_s.humanize(name));
     if (name === '') {
       name = 'Dashboard'
     }
