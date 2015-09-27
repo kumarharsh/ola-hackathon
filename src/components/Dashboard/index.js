@@ -81,7 +81,7 @@ export default class Dashboard extends Base {
       <div style={{height:'100%'}}>
         <div style={{height:'100%', display:'flex', flexDirection:'column'}}>
           <div className="user-profile" style={{backgroundColor: others.grey800, borderBottom:'2px solid ' + OLA, padding:'0 1em'}}>
-            <Link to={'/dashboard'} style={{display:'flex', height:'100%', color: others.white, textDecoration:'none'}}>
+            <Link to={'/ride_now'} style={{display:'flex', height:'100%', color: others.white, textDecoration:'none'}}>
               <div className="avatar" style={{borderRadius:'50%', width: user.avatar.medium.width, height: user.avatar.medium.height, overflow:'hidden', flexGrow:0, margin:'1em 0'}}>
                 <img src={user.avatar.medium.url} alt={user.name} style={{maxWidth:'100%', maxWidth:"100%"}}/>
               </div>
