@@ -15,7 +15,8 @@ import {
 export default class Dashboard extends Base {
 
   state = {
-    selectValue: undefined
+    selectValue: undefined,
+    formOpen: false
   };
 
   _handleSelectValueChange = (e) => {
@@ -35,11 +36,22 @@ export default class Dashboard extends Base {
     ];
 
     let menuItems = [
-      { payload: '1', text: 'Never' },
-      { payload: '2', text: 'Every Night' },
-      { payload: '3', text: 'Weeknights' },
-      { payload: '4', text: 'Weekends' },
-      { payload: '5', text: 'Weekly' },
+      { payload: '1', text: 'Social' },
+      { payload: '2', text: 'Restaurants' },
+      { payload: '3', text: 'Theaters' },
+      { payload: '4', text: 'Hotels' },
+      { payload: '5', text: 'Railways' },
+      { payload: '6', text: 'Airports' },
+      { payload: '7', text: 'Bus Stands' },
+      { payload: '8', text: 'School' },
+      { payload: '9', text: 'Hospital' },
+    ];
+
+    let timeItems = [
+      { payload: '1', text: 'Once' },
+      { payload: '2', text: 'Daily' },
+      { payload: '3', text: 'Mon-Fri' },
+      { payload: '4', text: 'Weekly' },
     ];
 
     const scheduleList = [
@@ -54,35 +66,33 @@ export default class Dashboard extends Base {
     return (
       <div>
         <AppBar title="Schedule"/>
-        <div>
+        <div style={{display: !this.state.formOpen ? null : 'none'}}>
           <List>
             { scheduleList.map((item) => <ListItem primaryText={item.text} />) }
           </List>
-
-          <FloatingActionButton onClick={this._openDialog}></FloatingActionButton>
-
-          <Dialog
-            ref="dialog"
-            title="Add New"
-            actions={customActions}
-            autoDetectWindowHeight={true} autoScrollBodyContent={true}>
-            <TextField hintText="Hint Text" />
-            <TextField hintText="Hint Text" />
-            <TextField hintText="Hint Text" />
-            <SelectField
-              onChange={this._handleSelectValueChange}
-              value={this.state.selectValue}
-              hintText="Hint Text"
-              menuItems={menuItems} />
-          </Dialog>
-
+          <FloatingActionButton onClick={this._openForm} />
+        </div>
+        <div style={{display: this.state.formOpen ? null : 'none'}}>
+          <TextField hintText="" />
+          <TextField hintText="Hint Text" />
+          <TextField hintText="Hint Text" />
+          <SelectField
+            onChange={this._handleSelectValueChange}
+            value={this.state.selectValue}
+            hintText="Hint Text"
+            menuItems={menuItems} />
+          <SelectField
+            onChange={this._handleSelectValueChange}
+            value={this.state.selectValue}
+            hintText="Hint Text"
+            menuItems={timeItems} />
         </div>
       </div>
     );
   }
 
-  openDialog = () => {
-    this.refs.dialog.show();
+  _openForm = () => {
+    this.setState({formOpen: true});
   };
 
   _addSchedule() {

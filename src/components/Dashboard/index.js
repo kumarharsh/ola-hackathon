@@ -5,6 +5,7 @@ import { FlatButton } from 'material-ui';
 import { Link } from 'react-router';
 import { OLA, others } from '../../colors';
 import Flame from '../Streak/Flame';
+import RideMap from './RidesMap';
 
 export default class App extends Base {
   render() {
@@ -61,7 +62,9 @@ export default class App extends Base {
               </div>
             </Link>
           </div>
-          <div className="MAP" style={{flex:'1 0 300px'}}></div>
+          <div className="MAP" style={{flex:'1 0 300px'}}>
+            <RideMap />
+          </div>
           <div className="ride-status">
             <FlatButton label="Ride Now" style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
           </div>

@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import Reward from './components/Reward';
 import Driver from './components/Driver';
 import Profile from './components/Profile';
+import Schedule from './components/Schedule';
 
 import { Router, Route, Redirect, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
@@ -27,7 +28,7 @@ function requireAuth(nextState, replaceState) {
   } else {
     console.log('Already Logged in')
     setInterval(function() {
-      OlaApi.api('/v1/bookings/track_ride', 'GET')
+      OlaApi.client.api('/v1/bookings/track_ride', 'GET')
       .then(function(data){
         return data.json()
       })
@@ -46,7 +47,7 @@ function requireAuth(nextState, replaceState) {
              history.replaceState(null, '/reward') // TODO change route
           })
         }
-      })
+      });
     }, 5000);
   }
 }
@@ -69,6 +70,7 @@ React.render(
       {/* authorized routes */}
       <Route path="/" component={Dashboard}/>
       <Route path="/dashboard" component={Dashboard}/>
+      <Route path="/schedule" component={Schedule}/>
       <Route path="/profile" component={Profile} />
       <Route path="/logout" component={Logout} onEnter={logout} />
     </Route>

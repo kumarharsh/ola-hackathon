@@ -1,15 +1,21 @@
 import {default as React, addons, Component} from 'react/addons';
 
-import { GoogleMap, Marker, SearchBox } from 'react-google-maps';
+import { GoogleMap, SearchBox, InfoWindow, Circle } from 'react-google-maps';
+import raf from 'raf';
+import OlaApi from '../../Services/OlaApi';
+
+window.OlaApi = OlaApi;
 
 const {update} = addons;
 
-/*
- * This is the modify version of:
- * https://developers.google.com/maps/documentation/javascript/examples/event-arguments
- *
- * Add <script src="https://maps.googleapis.com/maps/api/js"></script> to your HTML to provide google.maps reference
- */
+const geolocation = (
+  "undefined" !== typeof window && navigator && navigator.geolocation || {
+    getCurrentPosition: (success, failure) => {
+      failure("Your browser doesn't support geolocation.");
+    },
+  }
+);
+
 export default class RideMap extends Component {
 
   componentDidMount() {
@@ -32,14 +38,9 @@ export default class RideMap extends Component {
   }
 
   state = {
-    markers: [{
-      position: {
-        lat: 25.0112183,
-        lng: 121.52067570000001,
-      },
-      key: 'Taiwan',
-      defaultAnimation: 2,
-    }],
+    center: null,
+    content: null,
+    radius: 6000,
   };
 
   static inputStyle = {
@@ -50,31 +51,12 @@ export default class RideMap extends Component {
     MozBoxSizing: 'border-box',
     fontSize: '14px',
     height: '32px',
-    marginTop: '27px',
     outline: 'none',
     padding: '0 12px',
     textOverflow: 'ellipses',
-    width: '400px'
-  };
-
-  /*
-   * This is called when you click on the map.
-   * Go and try click now.
-   */
-  _handle_map_click = (event) => {
-    let {markers} = this.state;
-    markers = update(markers, {
-      $push: [
-        {
-          position: event.latLng,
-          defaultAnimation: 2,
-          key: Date.now(),// Add a key property for: http://fb.me/react-warning-keys
-        },
-      ],
-    });
-    this.setState({ markers });
-
-    console.log(this.refs.map.getBounds());
+    width: '100%',
+    left: '0px',
+    zIndex: '1000'
   };
 
   _handle_places_changed = () => {
@@ -82,9 +64,9 @@ export default class RideMap extends Component {
     const markers = [];
 
     // Add a marker for each place returned from search bar
-    places.forEach(function (place) {
+    places.forEach(function(place) {
       markers.push({
-        position: place.geometry.location
+        position: place.geometry.location,
       });
     });
 
@@ -99,48 +81,71 @@ export default class RideMap extends Component {
     return;
   };
 
-  _handle_marker_rightclick(index, event) {
-    /*
-     * All you modify is data, and the view is driven by data.
-     * This is so called data-driven-development. (And yes, it's now in
-     * web front end and even with google maps API.)
-     */
-    let {markers} = this.state;
-    markers = update(markers, {
-      $splice: [
-        [index, 1]
-      ],
+  componentDidMount() {
+    geolocation.getCurrentPosition((position) => {
+      this.setState({
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        },
+        content: 'Here',
+      });
+
+      const tick = () => {
+        this.setState({ radius: Math.max(this.state.radius - 20, 0) });
+        if (this.state.radius > 200) {
+          raf(tick);
+        }
+      };
+      raf(tick);
+    }, (reason) => {
+      this.setState({
+        center: {
+          lat: 60,
+          lng: 105,
+        },
+        content: `Error: The Geolocation service failed (${ reason }).`
+      });
     });
-    this.setState({ markers });
   }
 
   render() {
+    const {center, content, radius} = this.state;
+    let contents = [];
+
+    if (center) {
+      contents = contents.concat([
+        (<InfoWindow key="info" position={center} content={content} />),
+        (<Circle key="circle" center={center} radius={radius} options={{
+          fillColor: 'red',
+          fillOpacity: 0.20,
+          strokeColor: 'red',
+          strokeOpacity: 1,
+          strokeWeight: 1,
+        }} />),
+      ]);
+    }
+
     return (
-      <section style={{height: "300px"}}>
+      <section style={{height: '450px'}}>
         <GoogleMap containerProps={{
             style: {
-              height: "100%",
+              height: '100%',
             },
           }}
           ref="map"
-          defaultZoom={3}
-          defaultCenter={{lat: -25.363882, lng: 131.044922}}
-          onClick={this._handle_map_click}>
+          defaultZoom={12}
+          center={center}>
 
-           <SearchBox
+          <SearchBox
             bounds={this.state.bounds}
             controlPosition={google.maps.ControlPosition.TOP_LEFT}
             onPlacesChanged={this._handle_places_changed}
             ref="searchBox"
             style={RideMap.inputStyle} />
 
-          {this.state.markers.map((marker, index) => {
-            return (
-              <Marker
-                {...marker}
-                onRightclick={this._handle_marker_rightclick.bind(this, index)} />
-            );
-          })}
+          {contents}
+
         </GoogleMap>
       </section>
     );
