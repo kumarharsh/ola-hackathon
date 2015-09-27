@@ -17,7 +17,7 @@ export default class App extends Base {
         <Link to="/login">Login</Link>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/reward">Reward</Link>
-        <Link to="/share">Share</Link>
+        <Link to="/driver">Driver</Link>
       </div>
     );
   }

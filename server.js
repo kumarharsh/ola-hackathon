@@ -3,6 +3,7 @@ var express = require('express')
 var session = require('express-session')
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
+var fetch = require('isomorphic-fetch')
 var webpack = require('webpack')
 var config = require('./webpack.config.dev')
 var Playlyfe = require('playlyfe').Playlyfe;
@@ -40,6 +41,11 @@ app.use(function(req, res, next) {
 
 app.use(cookieParser())
 app.use(bodyParser.json({ strict: true }))
+app.use(function(req, res, next){
+  console.log(req.path)
+  next()
+})
+
 app.all('/api/*', function(req, res) {
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
   res.header("Pragma", "no-cache");
@@ -67,6 +73,28 @@ app.all('/api/*', function(req, res) {
       error_description: "An unexpected error occured while trying to contact the Playlyfe API"
     });
   });
+})
+
+app.all('/ola/*', function(req, res) {
+  headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-APP-Token': '883fec6fca1b413c9032b19f48a04958',
+  }
+  if (req.query.access_token) {
+    headers['Authorization'] = 'Bearer '+req.query.access_token
+    delete req.query.access_token
+  }
+  fetch(req.path.replace('/ola/', 'http://sandbox-t.olacabs.com/'), {
+    method: req.method,
+    headers: headers,
+    body: req.body
+  })
+  .then(function(data) { res.status(200).json(data) })
+  .catch(function(err) {
+    console.log(err)
+    res.status(500).json({ err: err })
+  })
 })
 
 function updateStreak(req, cb) {
@@ -98,8 +126,8 @@ function playAction(action_id, variables, req, res) {
     }
     variables.streak = count
     pl.post('/runtime/actions/'+action_id+'/play', { player_id: req.session.user_id }, { variables: variables })
-    .then(() => res.status(200).json({ ok: 1}))
-    .catch((err) => res.status(500).json({err: err}))
+    .then(function(){ res.status(200).json({ ok: 1}) })
+    .catch(function(err){res.status(500).json({err: err})})
   })
 }
 
