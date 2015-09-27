@@ -6,6 +6,7 @@ import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import AppTheme from '../../theme';
 import { AppBar, RaisedButton } from 'material-ui';
 import { OLA } from '../../colors';
+import { OlaApi } from '../../Services/OlaApi';
 
 export default class Login extends Base {
   getChildContext() {
@@ -28,4 +29,4 @@ export default class Login extends Base {
 
 Login.childContextTypes = {
   muiTheme: React.PropTypes.object,
-}
+};

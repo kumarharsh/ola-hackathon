@@ -158,7 +158,7 @@ export default {
     };
 
     this.getLoginLink = function() {
-      return `${OAUTH_URL}?response_type=token&client_id=' + encodeURIComponent(settings.client_id) + '&redirect_uri=' + encodeURIComponent(settings.redirect_uri)`;
+      return `${OAUTH_URL}?response_type=token&client_id='${encodeURIComponent(settings.client_id)}'&redirect_uri='${encodeURIComponent(settings.redirect_uri)}'`;
     };
 
     this.getLogoutLink = function() {
@@ -195,7 +195,7 @@ export default {
     };
 
     this.logout = function(callback) {
-      this.api('/logout','POST', callback);
+      // this.api('/logout','POST', callback);
       Cookie.remove(c_access_token);
     };
 
@@ -213,4 +213,6 @@ export default {
   getStatus: function() {
     return status;
   },
+
+  client: null,
 };
