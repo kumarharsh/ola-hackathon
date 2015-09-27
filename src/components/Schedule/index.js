@@ -12,6 +12,7 @@ import {
   SelectField,
   TimePicker,
   FontIcon,
+  Paper,
 } from 'material-ui';
 
 import {schedule} from './service'
@@ -55,17 +56,17 @@ export default class Dashboard extends Base {
       { payload: '4', text: 'Weekly' },
     ];
 
-    const scheduleList = schedule.getList();
-    let scheduleListItems = null;
-    if (scheduleList.length) {
-      scheduleListItems = scheduleList.map((item) => {
+    let scheduleList = null;
+    let list = schedule.getList();
+    console.log(list);
+    if (list.length !== 0) {
+      const scheduleListItems = list.map((item) => {
         return <ListItem primaryText={item.name} />;
       });
+      scheduleList = <List>{scheduleListItems}</List>;
     } else {
-      scheduleListItems = (
-        <ListItem primaryText={"Nothing scheduled yet"}
-          secondaryText={<RaisedButton label={"Add"} onClick={this._add} />}
-        />
+      scheduleList = (
+        <RaisedButton label={"Add"} onClick={this._add}>Mayank</RaisedButton>
       );
     }
 
@@ -77,8 +78,11 @@ export default class Dashboard extends Base {
 
     const formStyles = {
       display: this.state.formOpen ? null : 'none',
-      margin: '0 auto;',
-      width: '80%;'
+      margin: '0 auto',
+      width: '85%',
+      marginTop: '20px',
+      border: '1px solid #ddd',
+      padding: '20px',
     };
 
     const fullWidth = {
@@ -88,12 +92,12 @@ export default class Dashboard extends Base {
     return (
       <div>
         <div style={{display: !this.state.formOpen ? null : 'none'}}>
-          <List> {scheduleListItems} </List>
+          {scheduleList}
           <FloatingActionButton onClick={this._openForm} style={fabStyles}>
             <FontIcon className="material-icons">add</FontIcon>
           </FloatingActionButton>
         </div>
-        <div style={formStyles}>
+        <Paper zIndex={3} style={formStyles} className="add_schedule_form">
           <TextField
             style={fullWidth}
             floatingLabelText="Name"
@@ -129,11 +133,17 @@ export default class Dashboard extends Base {
             value={this.state.form.repeat}
             hintText="Hint Text"
             menuItems={timeItems} />
-          <div>
+          <TextField
+            style={fullWidth}
+            floatingLabelText="Phone No."
+            onChange={this._handleValueChange.bind(null, 'ph')}
+            value={this.state.form.ph}
+          />
+          <div style={{marginTop: '10px'}} >
             <RaisedButton label="Add"  onClick={this._add} secondary={true} />
             <FlatButton label="Cancel" onClick={this._closeForm} />
           </div>
-        </div>
+        </Paper>
       </div>
     );
   }

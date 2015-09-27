@@ -1,8 +1,9 @@
 import React from 'react';
 import Base from '../../Base';
 
-import ScheduleService from '../Schedule/service';
+import ScheduleService, {schedule} from '../Schedule/service';
 import { Paper, FlatButton } from 'material-ui';
+import History from '../../Services/hist';
 
 export default class Notification extends Base {
   state = {
@@ -12,11 +13,16 @@ export default class Notification extends Base {
 
   componentDidMount() {
     // register schedule
-    console.log('component mount')
     ScheduleService.start((data) => {
-      console.log('called');
       this.setState({visible: true, data: data});
+      History.replaceState(null, '/ride_now');
     });
+  }
+
+  _dismissNotification = () => {
+    const item_id = this.state.data.schedule_item.id;
+    schedule.silentNotification(item_id);
+    this.setState({visible: false});
   }
 
   _closeNotification = () => {
@@ -37,7 +43,10 @@ export default class Notification extends Base {
       <Paper zDepth={4} style={styles}>
         <h3> Notification </h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque omnis officiis iste facilis nihil, quam nemo sequi eius, aut dolor at, odit eum amet saepe porro iure mollitia excepturi corrupti!</p>
-        <FlatButton linkButton={true} href="/ride_now" onClick={this._closeNotification}>Book</FlatButton>
+        <div>
+          <FlatButton linkButton={true} onClick={this._closeNotification}>Book</FlatButton>
+          <FlatButton linkButton={true} onClick={this._dismissNotification}>Dismiss</FlatButton>
+        </div>
       </Paper>
     );
   }

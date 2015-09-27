@@ -14,10 +14,19 @@ export const schedule = {
 
   add(item) {
     let list = this.getList();
+    item.id = list.length;
     list.push(item);
     localStorage.setItem(this.key, JSON.stringify(list));
     return;
   },
+
+  silentNotification(item_id) {
+    let list = this.getList();
+    let item = list[item_id];
+    item.silentNotification = true;
+    localStorage.setItem(this.key, JSON.stringify(list));
+    return;
+  }
 };
 
 function checkOlaCab({lat, long}) {
@@ -33,8 +42,8 @@ function checkOlaCab({lat, long}) {
 }
 
 function canRequestCab(time) {
-  const diff = (time - Date.now());
-  const threshold = 10000;
+  const diff = (Date.now() - time);
+  const threshold = 5 * 60 * 10000;
   if (diff < threshold) {
     return true;
   } else {
@@ -49,17 +58,18 @@ export default {
     if (activeTimer) {
       clearInterval(activeTimer);
     }
-    let list = schedule.getList();
     function check() {
+      let list = schedule.getList();
       for (let idx = 0; idx < list.length; idx += 1) {
         let item = list[idx];
+        if (item.silentNotification) { continue; }
         if (canRequestCab(item.time)) {
           const lat = '12.950072'; // FIXME: remove hardcoded values
           const long = '77.642684';
           checkOlaCab({lat, long}).then((cabDetails) => {
             if (cabDetails) {
               clearInterval(activeTimer);
-              return cb({cab: cabDetails, schedule: item});
+              return cb({cab: cabDetails, schedule_item: item});
             }
           });
         }
