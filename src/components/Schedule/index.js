@@ -13,6 +13,8 @@ import {
   TimePicker,
 } from 'material-ui';
 
+import {schedule} from './service'
+
 export default class Dashboard extends Base {
 
   state = {
@@ -52,70 +54,104 @@ export default class Dashboard extends Base {
       { payload: '4', text: 'Weekly' },
     ];
 
-    const scheduleList = [
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-    ];
+    const scheduleList = schedule.getList();
+    let scheduleListItems = null;
+    if (scheduleList.length) {
+      scheduleListItems = scheduleList.map((item) => {
+        return <ListItem primaryText={item.name} />;
+      });
+    } else {
+      scheduleListItems = (
+        <ListItem primaryText={"Nothing scheduled yet"}
+          secondaryText={<RaisedButton label={"Add"} onClick={this._add} />}
+        />
+      );
+    }
+
+    const fabStyles = {
+      position: 'fixed',
+      bottom: '50px',
+      right: '50px',
+    };
+
+    const formStyles = {
+      display: this.state.formOpen ? null : 'none',
+      margin: '0 auto;',
+      width: '80%;'
+    };
+
+    const fullWidth = {
+      width: "100%"
+    };
 
     return (
       <div>
         <div style={{display: !this.state.formOpen ? null : 'none'}}>
-          <List>
-            { scheduleList.map((item) => <ListItem primaryText={item.text} />) }
-          </List>
-          <FloatingActionButton onClick={this._openForm} />
+          <List> {scheduleListItems} </List>
+          <FloatingActionButton onClick={this._openForm} style={fabStyles} />
         </div>
-        <div style={{display: this.state.formOpen ? null : 'none'}}>
+        <div style={formStyles}>
           <TextField
-            hintText="Pickup Point"
+            style={fullWidth}
+            floatingLabelText="Name"
+            onChange={this._handleValueChange.bind(null, 'name')}
+            value={this.state.form.name}
+          />
+          <TextField
+            style={fullWidth}
+            floatingLabelText="Pickup Point"
             onChange={this._handleValueChange.bind(null, 'pickup')}
             value={this.state.form.pickup}
           />
-          <TextField hintText="Hint Text" />
-          <TextField hintText="Hint Text" />
+          <TextField
+            style={fullWidth}
+            floatingLabelText="End Point"
+            onChange={this._handleValueChange.bind(null, 'end')}
+            value={this.state.form.end}
+          />
           <TimePicker
+            style={fullWidth}
             onChange={this._handleTimeChange}
             format="ampm"
             hintText="12hr Format" />
           <SelectField
+            style={fullWidth}
             onChange={this._handleValueChange.bind(null, 'category')}
             value={this.state.form.category}
             hintText="Hint Text"
             menuItems={categoryItems} />
           <SelectField
+            style={fullWidth}
             onChange={this._handleValueChange.bind(null, 'repeat')}
             value={this.state.form.repeat}
             hintText="Hint Text"
             menuItems={timeItems} />
-
-          <RaisedButton label="Add"  onClick={this._add} />
-          <FlatButton label="Cancel" onClick={this._cancelAdd} />
-
+          <div>
+            <RaisedButton label="Add"  onClick={this._add} secondary={true} />
+            <FlatButton label="Cancel" onClick={this._closeForm} />
+          </div>
         </div>
       </div>
     );
   }
 
   _add = () => {
-    console.log(this.state.form);
-  }
+    schedule.add(this.state.form);
+    this._closeForm();
+  };
 
-  _cancelAdd = () => {
+  _closeForm = () => {
     this.setState({formOpen: false, form: {}});
-  }
+  };
 
   _openForm = () => {
     this.setState({formOpen: true});
   };
 
   _handleTimeChange = (x, time) => {
-    this.state.from['time'] = time
-    this.set
-  }
+    this.state.form.time = time.getTime();
+    this.setState({form: this.state.form});
+  };
 
   _handleValueChange = (name, e) => {
     this.state.form[name] = e.target.value;
