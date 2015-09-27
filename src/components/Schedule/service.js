@@ -45,7 +45,7 @@ function checkOlaCab({lat, long}) {
 
 function canRequestCab(time) {
   const diff = (Date.now() - time);
-  const threshold = 5 * 60 * 10000;
+  const threshold = 5 * 60 * 1000;
   if (diff < threshold) {
     return true;
   } else {
