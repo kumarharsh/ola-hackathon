@@ -8,7 +8,7 @@ var uid = -1;
 var c_access_token = null;
 
 var LOGOUT_ENDPOINT = 'https://playlyfe.com/logout';
-var API_ENDPOINT = 'http://sandbox-t.olacabs.com/';
+var API_ENDPOINT = 'http://localhost/ola';
 var OAUTH_URL = 'http://sandbox-t.olacabs.com/oauth2/authorize';
 
 // Utility functions
@@ -178,12 +178,16 @@ export default {
       }
 
       let options = {
-        url: API_ENDPOINT + route,
-        type: method,
-        data: data,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: method
       };
-
-      return fetch(options);
+      if (method !== 'GET') {
+        options.body = data
+      }
+      return fetch(API_ENDPOINT + route, options);
     };
 
     this.login = function() {

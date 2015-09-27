@@ -90,7 +90,7 @@ app.all('/ola/*', function(req, res) {
     headers: headers,
     body: req.body
   })
-  .then(function(data) { res.status(200).json(data) })
+  .then(function(response) { res.status(200).json(response.json()) })
   .catch(function(err) {
     console.log(err)
     res.status(500).json({ err: err })
