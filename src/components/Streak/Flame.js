@@ -199,7 +199,11 @@ export default class Flame extends Base {
           <polygon points="100.618,56.445 100.617,56.446 100.62,56.447"/>
         </g>
       </svg>
-      <div className="streak-value" style={{fontSize:'2rem', textAlign:'center', color:'white', textShadow:'0 0.1em 5px ' + others.lightBlack, position:'absolute', top:0, right:0}}>{this.props.streak}</div>
+      {
+        this.props.mega
+          ? <div className="streak-value" style={{fontSize:'5rem', textAlign:'center', color:'white', textShadow:'0 0.1em 5px ' + others.lightBlack, position:'absolute', top:0, left:'55px'}}>{this.props.streak}</div>
+          : <div className="streak-value" style={{fontSize:'2rem', textAlign:'center', color:'white', textShadow:'0 0.1em 5px ' + others.lightBlack, position:'absolute', top:0, right:0}}>{this.props.streak}</div>
+      }
       </div>
     );
   }
