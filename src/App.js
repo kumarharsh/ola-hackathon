@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import Base from './Base';
 import { AppBar, LeftNav, MenuItem } from 'material-ui';
+import Notification from './components/Notification';
 
 export default class App extends Base {
 
@@ -47,6 +48,7 @@ export default class App extends Base {
     name = name.charAt(0).toUpperCase() + name.slice(1);
     return (
       <div style={{height:'100vh',display:'flex',flexDirection:'column'}}>
+        <Notification />
         <AppBar title={name} onLeftIconButtonTouchTap={this.showMenu} style={{flex:'0 0 auto'}}/>
         <LeftNav ref="leftNav" docked={false} menuItems={menuItems} />
         {this.props.children}

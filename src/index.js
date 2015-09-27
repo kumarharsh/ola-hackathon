@@ -25,25 +25,25 @@ OlaApi.client = new OlaApi.init({
 
 function requireAuth(nextState, replaceState) {
   if (!OlaApi.isLoggedIn()) {
-    console.log('Please Login')
+    console.log('Please Login');
     replaceState({ nextPathname: nextState.location.pathname }, '/login');
   } else {
-    console.log('Already Logged in')
+    console.log('Already Logged in');
     setInterval(function() {
       OlaApi.client.api('/v1/bookings/track_ride', 'GET')
       .then(function(data){
-        return data.json()
+        return data.json();
       })
       .then(function(data){
         console.log(data)
-         if(data.booking_status === 'COMPLETED') {
+        if (data.booking_status === 'COMPLETED') {
           fetch('/end_ride', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
           })
           .then(() => {
             History.replaceState(null, '/feedback')
