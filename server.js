@@ -13,6 +13,7 @@ var PlaylyfeException = require('playlyfe').PlaylyfeException;
 var MongoClient = require('mongodb').MongoClient
 var moment = require('moment')
 var assert = require('assert')
+var qs = require('querystring');
 var tracks_mgc
 
 
@@ -88,7 +89,9 @@ app.all('/ola/*', function(req, res) {
     headers['Authorization'] = 'Bearer '+req.query.access_token
     delete req.query.access_token
   }
-  fetch(req.path.replace('/ola/', 'http://sandbox-t.olacabs.com/'), {
+  var url = req.path.replace('/ola/', 'http://sandbox-t.olacabs.com/') + "?" + qs.stringify(req.query);
+  console.log(url);
+  fetch(url, {
     method: req.method,
     headers: headers,
     body: req.body
@@ -97,6 +100,7 @@ app.all('/ola/*', function(req, res) {
     return response.json()
   })
   .then(function(json) {
+    console.log(json)
     res.status(200).json(json)
   })
   .catch(function(err) {

@@ -24,7 +24,11 @@ function checkOlaCab({lat, long}) {
   return OlaApi.client.api(`/v1/products?pickup_lat=${lat}&pickup_long=${long}`, 'GET')
   .then((res) => { return res.json(); })
   .then(({categories}) => {
-    return categories[0];
+    if(!categories) {
+      return null;
+    } else {
+      return categories[0];
+    }
   });
 }
 
