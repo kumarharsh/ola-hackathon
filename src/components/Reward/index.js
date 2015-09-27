@@ -1,7 +1,7 @@
 import React from 'react';
 import Base from '../../Base';
 
-import { AppBar, RaisedButton } from 'material-ui';
+import { AppBar, RaisedButton, FlatButton, Dialog, TextField, CircularProgress } from 'material-ui';
 import { primary, others } from '../../colors';
 import fetch from 'isomorphic-fetch';
 import history from 'history'
@@ -10,25 +10,12 @@ export default class Reward extends Base {
 
   constructor() {
     super()
-    // data.trip_info.distance.value
-    var data = {
-      name: 'Hubot',
-      login: 'hubot',
-    }
-    this.endRide = () => {
-      fetch('/end_ride', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
-         history.replaceState(null, '/') // TODO change route
-      })
-    }
+    this.state = { value: 60 }
     this.shareTweet = () => {
+      this.refs.tw_modal.show()
+    }
+    this.shareTweetSubmit = (e) => {
+      // console.log(e)
       fetch('/tweet_on_twitter', {
         method: 'POST',
         headers: {
@@ -37,11 +24,18 @@ export default class Reward extends Base {
         },
         body: JSON.stringify({})
       })
-      .then(() => {
-        alert('Tweet on Twitter')
-      })
+      this.refs.tw_modal.dismiss()
+    }
+    this.closeTweet = () => {
+      this.refs.tw_modal.dismiss()
     }
     this.shareFB = () => {
+      this.refs.fb_modal.show()
+    }
+    this.closeFB = () => {
+      this.refs.fb_modal.dismiss()
+    }
+    this.shareFBSubmit = (e) => {
       fetch('/share_on_facebook', {
         method: 'POST',
         headers: {
@@ -50,24 +44,57 @@ export default class Reward extends Base {
         },
         body: JSON.stringify({})
       })
-      .then(() => {
-        alert('Shared on FB')
-      })
+      this.refs.fb_modal.dismiss()
     }
     this.schedule = () => {
-      alert('schedule')
     }
   }
 
   render() {
+    //Custom Actions
+    let fbActions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.closeFB} />,
+      <FlatButton
+        label="Share"
+        primary={true}
+        onTouchTap={this.shareFBSubmit} />
+    ]
+    let twActions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.closeTweet} />,
+      <FlatButton
+        label="Tweet"
+        primary={true}
+        onTouchTap={this.shareTweetSubmit} />
+    ]
+    var fb_modal = (
+      <Dialog
+        ref="fb_modal"
+        title="How was your ride ?"
+        actions={fbActions}
+      >
+      <TextField multiLine={true} />
+      </Dialog>
+    )
+    var tw_modal = (
+      <Dialog
+        ref="tw_modal"
+        title="How was your ride ?"
+        actions={twActions}
+      >
+      <TextField multiLine={true} />
+      </Dialog>
+    )
     return (
       <div>
         <AppBar title="Reward"/>
-        <RaisedButton
-          label="End Ride"
-          onClick={this.endRide}
-        />
         <div className="schedule-wrapper" style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
+          <CircularProgress mode="determinate" value={this.state.value} size={5} />
           <RaisedButton
             label="Share this on Twitter"
             onClick={this.shareTweet}
@@ -85,6 +112,8 @@ export default class Reward extends Base {
             onClick={this.schedule}
           />
         </div>
+        {fb_modal}
+        {tw_modal}
       </div>
     );
   }

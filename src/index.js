@@ -3,6 +3,7 @@ import App from './App';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Reward from './components/Reward';
+import Feedback from './components/Feedback';
 import Driver from './components/Driver';
 import Profile from './components/Profile';
 import Schedule from './components/Schedule';
@@ -44,7 +45,8 @@ function requireAuth(nextState, replaceState) {
             body: JSON.stringify(data)
           })
           .then(() => {
-             history.replaceState(null, '/reward') // TODO change route
+            // this.props = {}
+            history.replaceState(null, '/feedback') // TODO change route
           })
         }
       });
@@ -74,6 +76,7 @@ React.render(
       <Route path="/profile" component={Profile} />
       <Route path="/logout" component={Logout} onEnter={logout} />
     </Route>
+    <Route path="/feedback" component={Feedback} />
     <Route path="/reward" component={Reward} />
     <Route path="/driver" component={Driver} />
     <Route path="/login" component={Login} />
