@@ -37,7 +37,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(session({ resave: true, saveUninitialized: false, secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
 app.use(function(req, res, next) {
-  if (!req.session.user) {
+  if (!req.session.user_id) {
     req.session.user_id = 1
   }
   next()
@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
 app.use(cookieParser())
 app.use(bodyParser.json({ strict: true }))
 app.use(function(req, res, next){
-  console.log(req.path)
+  // console.log(req.path)
   next()
 })
 
@@ -85,6 +85,7 @@ app.all('/ola/*', function(req, res) {
     'Content-Type': 'application/json',
     'X-APP-Token': '883fec6fca1b413c9032b19f48a04958',
   }
+  console.log(req.query)
   if (req.query.access_token) {
     headers['Authorization'] = 'Bearer '+req.query.access_token
     delete req.query.access_token
@@ -97,15 +98,16 @@ app.all('/ola/*', function(req, res) {
     body: req.body
   })
   .then(function(response) {
-    return response.json()
+    console.log(response.headers)
+    return response.json();
   })
   .then(function(json) {
-    console.log(json)
-    res.status(200).json(json)
+    console.log("JSON", json)
+    res.status(200).json(json);
   })
   .catch(function(err) {
-    console.log(err)
-    res.status(500).json({ err: err })
+    console.log(err.stack);
+    res.status(500).json({ err: err });
   })
 })
 
