@@ -4,14 +4,12 @@ import Base from '../../Base';
 import { AppBar, RaisedButton, FlatButton, Dialog, TextField, CircularProgress } from 'material-ui';
 import { primary, others } from '../../colors';
 import fetch from 'isomorphic-fetch';
-import history from 'history'
+// import History from '../../Services/hist';
 
 export default class Reward extends Base {
 
   constructor(props) {
     super()
-    console.log(props)
-    console.log(props.routes[0].component)
     this.state = { value: 60 }
     this.shareTweet = () => {
       this.refs.tw_modal.show()
@@ -49,11 +47,11 @@ export default class Reward extends Base {
       this.refs.fb_modal.dismiss()
     }
     this.schedule = () => {
+      History.replaceState(null, '/schedule')
     }
   }
 
   render() {
-    //Custom Actions
     let fbActions = [
       <FlatButton
         label="Cancel"
