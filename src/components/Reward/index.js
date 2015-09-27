@@ -91,25 +91,22 @@ export default class Reward extends Base {
       </Dialog>
     )
     return (
-      <div>
-        <div className="schedule-wrapper" style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
+      <div style={{ backgroundColor:others.amber500, color:others.white }}>
+        <div style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
           <CircularProgress mode="determinate" value={this.state.value} size={5} />
+        </div>
+        <div style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
           <RaisedButton
             label="Share this on Twitter"
-            onClick={this.shareTweet}
-          />
-        </div>
-        <div className="schedule-wrapper" style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
+            onClick={this.shareTweet}/>
           <RaisedButton
             label="Share this on Facebook"
-            onClick={this.shareFB}
-          />
+            onClick={this.shareFB}/>
         </div>
-        <div className="schedule-wrapper" style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
+        <div style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
           <RaisedButton
             label="Schedule this Ride"
-            onClick={this.schedule}
-          />
+            onClick={this.schedule}/>
         </div>
         {fb_modal}
         {tw_modal}

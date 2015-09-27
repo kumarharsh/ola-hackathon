@@ -22,7 +22,8 @@ export default class Flame extends Base {
         [level1, level2, level3] = [others.yellow500, others.orange500, others.red500]
         break;
       case 4:
-        [level1, level2, level3] = [others.darkWhite, others.transparent, others.transparent]
+        // [level1, level2, level3] = [others.darkWhite, others.transparent, others.transparent]
+        [level1, level2, level3] = [others.darkWhite, others.lightBlue500, others.blue600]
         break;
       case 5:
         [level1, level2, level3] = [others.darkWhite, others.lightBlue500, others.transparent]

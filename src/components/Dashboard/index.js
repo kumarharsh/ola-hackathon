@@ -93,7 +93,7 @@ export default class Dashboard extends Base {
                 <div style={{fontSize:'1rem'}}>OLA Points</div>
               </div>
               <div className="streak" style={{flexGrow:0, padding:'1em 0'}}>
-                <Flame streak={user.streak} width="50"/>
+                <Flame streak={this.state.streak} width="50"/>
               </div>
             </Link>
           </div>

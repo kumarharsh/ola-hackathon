@@ -58,6 +58,7 @@ export default {
           const long = '77.642684';
           checkOlaCab({lat, long}).then((cabDetails) => {
             if (cabDetails) {
+              clearInterval(activeTimer);
               return cb({cab: cabDetails, schedule: item});
             }
           });

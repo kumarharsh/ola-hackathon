@@ -90,7 +90,7 @@ export default class Dashboard extends Base {
         <div style={{display: !this.state.formOpen ? null : 'none'}}>
           <List> {scheduleListItems} </List>
           <FloatingActionButton onClick={this._openForm} style={fabStyles}>
-            <FontIcon className="material-icons">plus</FontIcon>
+            <FontIcon className="material-icons">add</FontIcon>
           </FloatingActionButton>
         </div>
         <div style={formStyles}>
