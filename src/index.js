@@ -32,8 +32,25 @@ function requireAuth(nextState, replaceState) {
     } else {
       console.log('Already Logged in')
       setInterval(function() {
-        OlaApi.api('/v1/bookings/track_ride', 'GET', function(data) {
-          console.log("trar", data)
+        OlaApi.api('/v1/bookings/track_ride', 'GET')
+        .then(function(data){
+          return data.json()
+        })
+        .then(function(data){
+          console.log(data)
+           if(data.booking_status === 'COMPLETED') {
+            fetch('/end_ride', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+            .then(() => {
+               history.replaceState(null, '/reward') // TODO change route
+            })
+          }
         })
       }, 5000)
     }

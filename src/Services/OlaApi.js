@@ -133,8 +133,8 @@ export default {
       else _route = args[0];
 
       // Check callback
-      if(!isFunction(args[args.length-1])) throw Error('Invalid callback provided, please provide a function');
-      else _callback = args[args.length-1];
+      // if(!isFunction(args[args.length-1])) throw Error('Invalid callback provided, please provide a function');
+      // else _callback = args[args.length-1];
 
       if (args.length >= 3) {
         // fn (route, method, callback)

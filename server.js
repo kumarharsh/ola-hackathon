@@ -90,7 +90,12 @@ app.all('/ola/*', function(req, res) {
     headers: headers,
     body: req.body
   })
-  .then(function(response) { res.status(200).json(response.json()) })
+  .then(function(response) {
+    return response.json()
+  })
+  .then(function(json) {
+    res.status(200).json(json)
+  })
   .catch(function(err) {
     console.log(err)
     res.status(500).json({ err: err })
@@ -132,7 +137,6 @@ function playAction(action_id, variables, req, res) {
 }
 
 app.post('/end_ride', function(req, res) {
-  // req.body
   updateStreak(req, function(err, doc) {
     if (err) {
       return res.status(500).json({err: err})
@@ -140,7 +144,7 @@ app.post('/end_ride', function(req, res) {
     playAction('end_ride', {
       type: 1,
       duration: 500,
-      distance: 40
+      distance: 4//req.body.trip_info.distance.value
     }, req, res)
   })
 });
