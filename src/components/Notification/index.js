@@ -37,7 +37,7 @@ export default class Notification extends Base {
       <Paper zDepth={4} style={styles}>
         <h3> Notification </h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque omnis officiis iste facilis nihil, quam nemo sequi eius, aut dolor at, odit eum amet saepe porro iure mollitia excepturi corrupti!</p>
-        <FlatButton linkButton={true} href="/dashboard" onClick={this._closeNotification}>Book</FlatButton>
+        <FlatButton linkButton={true} href="/ride_now" onClick={this._closeNotification}>Book</FlatButton>
       </Paper>
     );
   }
