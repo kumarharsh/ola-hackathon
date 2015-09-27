@@ -64,7 +64,8 @@ export default class RideMap extends Component {
     const markers = [];
 
     // Add a marker for each place returned from search bar
-    places.forEach(function(place) {
+    places.forEach((place) => {
+      this.props.onChangeLocation(place.geometry.location)
       markers.push({
         position: place.geometry.location,
       });

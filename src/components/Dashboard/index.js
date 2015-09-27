@@ -8,12 +8,21 @@ import Flame from '../Streak/Flame';
 import RideMap from './RidesMap';
 
 import fetch from 'isomorphic-fetch';
+import OlaApi from '../../Services/OlaApi'
 
 export default class Dashboard extends Base {
 
   constructor() {
     super()
-    this.state = { scores: [], streak: 0 }
+    this.state = { scores: [], streak: 0, rideAvailable: false, dir: {H: 0, L: 0 } }
+    this.changePt = (e) => {
+      this.setState({ dir: { H: e.H, L: e.L }})
+      OlaApi.client.api(`/v1/products?pickup_lat=${e.H}&pickup_lng=${e.L}`, 'GET')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+      })
+    }
   }
 
   componentWillMount() {
@@ -89,10 +98,10 @@ export default class Dashboard extends Base {
             </Link>
           </div>
           <div className="MAP" style={{flex:'1 0 300px'}}>
-            <RideMap />
+            <RideMap onChangeLocation={this.changePt} />
           </div>
           <div className="ride-status">
-            <FlatButton label="Ride Now" style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
+            <FlatButton label="Ride Now" diable={this.state.rideAvailable} style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
           </div>
         </div>
       </div>
