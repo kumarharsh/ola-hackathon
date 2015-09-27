@@ -7,7 +7,33 @@ import { OLA, others } from '../../colors';
 import Flame from '../Streak/Flame';
 import RideMap from './RidesMap';
 
+import fetch from 'isomorphic-fetch';
+
 export default class Dashboard extends Base {
+
+  constructor() {
+    super()
+    this.state = { scores: [], streak: 0 }
+  }
+
+  componentWillMount() {
+    console.log('mounting')
+    fetch('/api/runtime/player?player_id=1')
+    .then((response) => {
+      return response.json()
+    })
+    .then((player) => {
+      this.setState({ scores: player.scores })
+    })
+    fetch('/streak')
+    .then((response) => {
+      return response.json()
+    })
+    .then((json) => {
+      this.setState({ streak: json.streak })
+    })
+  }
+
   render() {
     var user = {
       name: 'Kumar Harsh',
@@ -35,7 +61,7 @@ export default class Dashboard extends Base {
         }
       }
     }
-    var pt_metric = user.scores.find(function(s) { return s.metric.id === 'ola_points'; }),
+    var pt_metric = this.state.scores.find(function(s) { return s.metric.id === 'ola_points'; }),
         ola_points;
     if (pt_metric == null) {
       ola_points = 0;

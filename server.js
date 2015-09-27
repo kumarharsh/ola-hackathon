@@ -157,7 +157,7 @@ app.post('/tweet_on_twitter', function(req, res) {
   playAction('tweet_on_twitter', {}, req, res)
 })
 
-app.get('/history', function(req, res) {
+app.get('/streak', function(req, res) {
   calculateStreak(req, function(err, count) {
     if (err) {
       return res.status(500).json({err: err})
