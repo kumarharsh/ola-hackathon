@@ -1,7 +1,7 @@
 import Base from '../../Base';
 import React from 'react';
 
-import { FlatButton } from 'material-ui';
+import { Dialog, FlatButton } from 'material-ui';
 import { Link } from 'react-router';
 import { OLA, others } from '../../colors';
 import Flame from '../Streak/Flame';
@@ -14,14 +14,26 @@ export default class Dashboard extends Base {
 
   constructor() {
     super()
-    this.state = { scores: [], streak: 0, rideAvailable: false, dir: {H: 0, L: 0 } }
+    this.state = { title: "", scores: [], streak: 0, rideAvailable: false, dir: {H: 0, L: 0 } }
     this.changePt = (e) => {
       this.setState({ dir: { H: e.H, L: e.L }})
       OlaApi.client.api(`/v1/products?pickup_lat=${e.H}&pickup_lng=${e.L}`, 'GET')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log("422", data)
       })
+    }
+    this.rideNow = (e) => {
+      OlaApi.client.api(`/v1/bookings/create?pickup_lat=12.950072&pickup_lng=77.642684&pickup_mode=NOW&category=sedan`, 'GET')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Data", data)
+        this.setState({ title: "Your Customer Ride Number is "+ data.crn})
+        this.refs.tw_modal.show()
+      })
+    }
+    this.closeModal = (e) => {
+      this.refs.tw_modal.dismiss()
     }
   }
 
@@ -77,6 +89,20 @@ export default class Dashboard extends Base {
     } else {
       ola_points = pt_metric.value;
     }
+    let twActions = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onTouchTap={this.closeModal} />
+    ]
+    var tw_modal = (
+      <Dialog
+        ref="tw_modal"
+        title={this.state.title}
+        actions={twActions}
+      >
+      </Dialog>
+    )
     return (
       <div style={{height:'100%'}}>
         <div style={{height:'100%', display:'flex', flexDirection:'column'}}>
@@ -101,9 +127,10 @@ export default class Dashboard extends Base {
             <RideMap onChangeLocation={this.changePt} />
           </div>
           <div className="ride-status">
-            <FlatButton label="Ride Now" disable={this.state.rideAvailable} style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
+            <FlatButton label="Ride Now" onClick={this.rideNow} style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
           </div>
         </div>
+        {tw_modal}
       </div>
     );
   }
