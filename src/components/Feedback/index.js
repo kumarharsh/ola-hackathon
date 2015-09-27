@@ -12,10 +12,26 @@ export default class Feedback extends Base {
 
   constructor() {
     super()
-    this.state = { value: 60 }
+    this.state = { local: [] }
     this.gotoRewards = () => {
       History.replaceState(null, '/reward')
     }
+  }
+
+  componentWillMount() {
+    fetch('/end_ride', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      this.setState({ local: data.events.local })
+    })
   }
 
   render() {
@@ -30,6 +46,16 @@ export default class Feedback extends Base {
       marginTop: '2.5%',
       marginLeft: '2.5%'
     }
+    var events = this.state.local.map((event) => {
+      return event.changes.map((change) => {
+        return (
+          <div>
+            {change.metric.name} {change.value}
+            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
+          </div>
+        )
+      })
+    })
     return (
       <div>
         <div className="schedule-wrapper" style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
@@ -39,22 +65,13 @@ export default class Feedback extends Base {
           />
         </div>
         <u>Rating</u>
-        <Slider name="slider1" />
+        <div className="schedule-wrapper" style={{padding:'0.2em 0', margin: 10, textAlign:'center',  color:others.white}}>
+          <Slider name="slider1" value={0.2} step={0.2}/>
+        </div>
         <u>Rewards You Gained</u>
         <Carousel>
-        <img
-          src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
-        <img
-          src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>
-        <img
-          src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide3"/>
-        <img
-          src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide4"/>
-        <img
-          src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"/>
-        <img
-          src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"/>
-      </Carousel>
+        {events}
+        </Carousel>
       </div>
     );
   }
