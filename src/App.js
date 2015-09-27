@@ -2,6 +2,7 @@ import React from 'react/addons';
 import Base from './Base';
 import { AppBar, LeftNav, MenuItem } from 'material-ui';
 import Notification from './components/Notification';
+import _s from 'underscore.string';
 
 export default class App extends Base {
 
@@ -18,7 +19,7 @@ export default class App extends Base {
 
   render() {
     var menuItems = [
-      { type: MenuItem.Types.LINK, text: 'Dashboard', payload: '/dashboard' },
+      { type: MenuItem.Types.LINK, text: 'Ride Now', payload: '/ride_now' },
       { type: MenuItem.Types.LINK, text: 'Profile', payload: '/profile' },
       { type: MenuItem.Types.LINK, text: 'Schedule', payload: '/schedule' },
       { type: MenuItem.Types.LINK, text: 'Reward Store', payload: '/reward-store' },
@@ -27,7 +28,7 @@ export default class App extends Base {
       {
          type: MenuItem.Types.LINK,
          payload: 'https://playlyfe.com',
-         text: 'Playlyfe'
+         text: 'Playlyfe',
       },
       {
          type: MenuItem.Types.LINK,
@@ -42,6 +43,7 @@ export default class App extends Base {
       },
     ]
     var name = this.props.location.pathname.replace('/', '')
+    name = _s.titleize(name);
     if (name === '') {
       name = 'Dashboard'
     }

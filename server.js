@@ -1,3 +1,5 @@
+require('es6-promise').polyfill();
+
 var path = require('path')
 var express = require('express')
 var session = require('express-session')
@@ -11,7 +13,9 @@ var PlaylyfeException = require('playlyfe').PlaylyfeException;
 var MongoClient = require('mongodb').MongoClient
 var moment = require('moment')
 var assert = require('assert')
+var qs = require('querystring');
 var tracks_mgc
+
 
 var app = express();
 var compiler = webpack(config);
@@ -85,7 +89,9 @@ app.all('/ola/*', function(req, res) {
     headers['Authorization'] = 'Bearer '+req.query.access_token
     delete req.query.access_token
   }
-  fetch(req.path.replace('/ola/', 'http://sandbox-t.olacabs.com/'), {
+  var url = req.path.replace('/ola/', 'http://sandbox-t.olacabs.com/') + "?" + qs.stringify(req.query);
+  console.log(url);
+  fetch(url, {
     method: req.method,
     headers: headers,
     body: req.body
@@ -94,6 +100,7 @@ app.all('/ola/*', function(req, res) {
     return response.json()
   })
   .then(function(json) {
+    console.log(json)
     res.status(200).json(json)
   })
   .catch(function(err) {
@@ -113,6 +120,9 @@ function calculateStreak(req, cb) {
     }
     count = 0
     no_of_weeks = 4
+    if (!doc) {
+      return cb(null, 0);
+    }
     for(var i=doc.streak.length-1;i>= Math.max(0, doc.streak.length-no_of_weeks);i--) {
       if (doc.streak[i] === 1) {
         count += 1

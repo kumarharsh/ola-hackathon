@@ -1,3 +1,6 @@
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
+
 import React from 'react';
 import App from './App';
 import Login from './components/Login';
@@ -13,9 +16,6 @@ import { Router, Route, Redirect, IndexRoute } from 'react-router';
 import OlaApi from './Services/OlaApi';
 import History from './Services/hist';
 import fetch from 'isomorphic-fetch';
-import injectTapEventPlugin from "react-tap-event-plugin";
-
-injectTapEventPlugin();
 
 // try login
 OlaApi.client = new OlaApi.init({
@@ -68,9 +68,9 @@ class Logout extends React.Component {
 React.render(
   <Router history={History}>
     <Route path="/" component={App} onEnter={requireAuth}>
-      <Redirect from="/team34" to="/dashboard" />
+      <Redirect from="/team34" to="/ride_now" />
       {/* authorized routes */}
-      <Route path="/dashboard" component={Dashboard}/>
+      <Route path="/ride_now" component={Dashboard}/>
       <Route path="/schedule" component={Schedule}/>
       <Route path="/profile" component={Profile} />
       <Route path="/feedback" component={Feedback} />

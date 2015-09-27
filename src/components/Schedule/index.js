@@ -11,6 +11,7 @@ import {
   TextField,
   SelectField,
   TimePicker,
+  FontIcon,
 } from 'material-ui';
 
 import {schedule} from './service'
@@ -88,7 +89,9 @@ export default class Dashboard extends Base {
       <div>
         <div style={{display: !this.state.formOpen ? null : 'none'}}>
           <List> {scheduleListItems} </List>
-          <FloatingActionButton onClick={this._openForm} style={fabStyles} />
+          <FloatingActionButton onClick={this._openForm} style={fabStyles}>
+            <FontIcon className="material-icons">plus</FontIcon>
+          </FloatingActionButton>
         </div>
         <div style={formStyles}>
           <TextField
