@@ -8,7 +8,7 @@ var uid = -1;
 var c_access_token = null;
 
 var LOGOUT_ENDPOINT = 'https://playlyfe.com/logout';
-var API_ENDPOINT = 'http://localhost/ola';
+var API_ENDPOINT = 'http://sandbox-t.olacabs.com';
 var OAUTH_URL = 'http://sandbox-t.olacabs.com/oauth2/authorize';
 
 // Utility functions
@@ -97,7 +97,7 @@ export default {
   init: function(options) {
     settings.debug = options.debug;
 
-    settings.version = options.version || 'v2';
+    settings.version = options.version || 'v1';
     if(options.jwt) {
       // For custom login flow
       settings.jwt = options.jwt;

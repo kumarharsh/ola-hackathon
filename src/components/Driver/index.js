@@ -1,36 +1,34 @@
 import React from 'react';
 import Base from '../../Base';
 
-import { AppBar, RaisedButton, List, ListItem } from 'material-ui';
-import { primary, others } from '../../colors';
+import { AppBar, List, ListItem } from 'material-ui';
 import fetch from 'isomorphic-fetch';
-import history from 'history'
 
-var client_located_url = 'http://ts1­phoenix­proxy­api­1848854956.us­east­1.elb.amazonaws.com/v1/sandbox/client_located?crn=656'
-var start_trip_url = '/ola/v1/sandbox/start_trip?crn=656'
-var end_trip_url = '/ola/v1/sandbox/end_trip?crn=656'
-var get_imei_url = '/ola/v1/sandbox/get_imei?crn=656'
-var ready_booking_url = '/ola/v1/sandbox/available_for_booking?imei=123456789123110'
+var client_located_url = 'http://ts1­phoenix­proxy­api­1848854956.us­east­1.elb.amazonaws.com/v1/sandbox/client_located?crn=656';
+var start_trip_url = '/ola/v1/sandbox/start_trip?crn=656';
+var end_trip_url = '/ola/v1/sandbox/end_trip?crn=656';
+var get_imei_url = '/ola/v1/sandbox/get_imei?crn=656';
+var ready_booking_url = '/ola/v1/sandbox/available_for_booking?imei=123456789123110';
 
 export default class Driver extends Base {
 
   constructor() {
     super()
     this.ready = () => {
-      fetch(ready_booking_url)
-    }
+      fetch(ready_booking_url);
+    };
     this.startTrip = () => {
-      fetch(start_trip_url)
-    }
+      fetch(start_trip_url);
+    };
     this.endTrip = () => {
-      fetch(end_trip_url)
-    }
+      fetch(end_trip_url);
+    };
     this.clientLocated = () => {
-      fetch(client_located_url)
-    }
+      fetch(client_located_url);
+    };
     this.getImei = () => {
-      fetch(get_imei_url)
-    }
+      fetch(get_imei_url);
+    };
   }
 
   render() {
