@@ -29,6 +29,9 @@ function requireAuth(nextState, replaceState) {
     replaceState({ nextPathname: nextState.location.pathname }, '/login');
   } else {
     console.log('Already Logged in');
+    if (location.pathname === '/driver') {
+      return
+    }
     setInterval(function() {
       OlaApi.client.api('/v1/bookings/track_ride', 'GET')
       .then(function(data){
