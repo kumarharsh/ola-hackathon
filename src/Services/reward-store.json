@@ -1,0 +1,39 @@
+{
+  "rewards": [
+    {
+      "name": "Baskin Robbins BOGO",
+      "description": "Buy one Baskin Robbins subdae, and get another absolutely free!",
+      "image": "/public/assets/rewards/baskin.jpg",
+      "cost": "150",
+      "redeemed": false
+    },
+    {
+      "name": "Dominoes 15% Off",
+      "description": "Use the Code <DOMINO15> and see 15% of the cost swiped off your bill.",
+      "image": "/public/assets/rewards/dominoes-15pc.png",
+      "cost": "100",
+      "redeemed": true
+    },
+    {
+      "name": "Lenskart Freedom",
+      "description": "Choose your first lens and frame absolutely free!",
+      "image": "/public/assets/rewards/lenskart.jpg",
+      "cost": "350",
+      "redeemed": false
+    },
+    {
+      "name": "Little Italy",
+      "description": "Get a free Choco-Lava Cake, on-the-house!",
+      "image": "/public/assets/rewards/little-italy.png",
+      "cost": "550",
+      "redeemed": false
+    },
+    {
+      "name": "Brand new Decathlon tennis accessories",
+      "description": "Get brand new Decathlon tennis accessories free the next time you shop at any SportsXS store!",
+      "image": "/public/assets/rewards/sports-xs.jpg",
+      "cost": "1050",
+      "redeemed": false
+    }
+  ]
+}

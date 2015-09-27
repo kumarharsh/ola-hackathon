@@ -49,7 +49,7 @@ export default class Driver extends Base {
           <ListItem primaryText="Ready for Booking" onTouchTap={this.ready} />
           <ListItem primaryText="Start Trip" onTouchTap={this.start_trip} />
           <ListItem primaryText="End Trip" onTouchTap={this.endTrip}  />
-          <ListItem primaryText="Get Imei" onTouchTap={this.getImei} />
+          <ListItem primaryText="Get IMEI" onTouchTap={this.getImei} />
         </List>
       </div>
     );

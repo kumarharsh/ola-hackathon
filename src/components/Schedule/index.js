@@ -6,21 +6,21 @@ import {
   List,
   ListItem,
   FloatingActionButton,
+  RaisedButton,
   FlatButton,
-  Dialog,
   TextField,
   SelectField,
+  TimePicker,
 } from 'material-ui';
+
+import {schedule} from './service'
 
 export default class Dashboard extends Base {
 
   state = {
     selectValue: undefined,
-    formOpen: false
-  };
-
-  _handleSelectValueChange = (e) => {
-    this.setState({selectValue: e.target.value});
+    formOpen: false,
+    form: {},
   };
 
   render() {
@@ -35,7 +35,7 @@ export default class Dashboard extends Base {
         onTouchTap={this._handleCustomDialogSubmit} />
     ];
 
-    let menuItems = [
+    let categoryItems = [
       { payload: '1', text: 'Social' },
       { payload: '2', text: 'Restaurants' },
       { payload: '3', text: 'Theaters' },
@@ -54,44 +54,108 @@ export default class Dashboard extends Base {
       { payload: '4', text: 'Weekly' },
     ];
 
-    const scheduleList = [
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-      {text: 'Item1'},
-    ];
+    const scheduleList = schedule.getList();
+    let scheduleListItems = null;
+    if (scheduleList.length) {
+      scheduleListItems = scheduleList.map((item) => {
+        return <ListItem primaryText={item.name} />;
+      });
+    } else {
+      scheduleListItems = (
+        <ListItem primaryText={"Nothing scheduled yet"}
+          secondaryText={<RaisedButton label={"Add"} onClick={this._add} />}
+        />
+      );
+    }
+
+    const fabStyles = {
+      position: 'fixed',
+      bottom: '50px',
+      right: '50px',
+    };
+
+    const formStyles = {
+      display: this.state.formOpen ? null : 'none',
+      margin: '0 auto;',
+      width: '80%;'
+    };
+
+    const fullWidth = {
+      width: "100%"
+    };
 
     return (
       <div>
         <div style={{display: !this.state.formOpen ? null : 'none'}}>
-          <List>
-            { scheduleList.map((item) => <ListItem primaryText={item.text} />) }
-          </List>
-          <FloatingActionButton onClick={this._openForm} />
+          <List> {scheduleListItems} </List>
+          <FloatingActionButton onClick={this._openForm} style={fabStyles} />
         </div>
-        <div style={{display: this.state.formOpen ? null : 'none'}}>
-          <TextField hintText="" />
-          <TextField hintText="Hint Text" />
-          <TextField hintText="Hint Text" />
+        <div style={formStyles}>
+          <TextField
+            style={fullWidth}
+            floatingLabelText="Name"
+            onChange={this._handleValueChange.bind(null, 'name')}
+            value={this.state.form.name}
+          />
+          <TextField
+            style={fullWidth}
+            floatingLabelText="Pickup Point"
+            onChange={this._handleValueChange.bind(null, 'pickup')}
+            value={this.state.form.pickup}
+          />
+          <TextField
+            style={fullWidth}
+            floatingLabelText="End Point"
+            onChange={this._handleValueChange.bind(null, 'end')}
+            value={this.state.form.end}
+          />
+          <TimePicker
+            style={fullWidth}
+            onChange={this._handleTimeChange}
+            format="ampm"
+            hintText="12hr Format" />
           <SelectField
-            onChange={this._handleSelectValueChange}
-            value={this.state.selectValue}
+            style={fullWidth}
+            onChange={this._handleValueChange.bind(null, 'category')}
+            value={this.state.form.category}
             hintText="Hint Text"
-            menuItems={menuItems} />
+            menuItems={categoryItems} />
           <SelectField
-            onChange={this._handleSelectValueChange}
-            value={this.state.selectValue}
+            style={fullWidth}
+            onChange={this._handleValueChange.bind(null, 'repeat')}
+            value={this.state.form.repeat}
             hintText="Hint Text"
             menuItems={timeItems} />
+          <div>
+            <RaisedButton label="Add"  onClick={this._add} secondary={true} />
+            <FlatButton label="Cancel" onClick={this._closeForm} />
+          </div>
         </div>
       </div>
     );
   }
 
+  _add = () => {
+    schedule.add(this.state.form);
+    this._closeForm();
+  };
+
+  _closeForm = () => {
+    this.setState({formOpen: false, form: {}});
+  };
+
   _openForm = () => {
     this.setState({formOpen: true});
+  };
+
+  _handleTimeChange = (x, time) => {
+    this.state.form.time = time.getTime();
+    this.setState({form: this.state.form});
+  };
+
+  _handleValueChange = (name, e) => {
+    this.state.form[name] = e.target.value;
+    this.setState({form: this.state.form});
   };
 
   _addSchedule() {

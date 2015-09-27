@@ -78,8 +78,8 @@ export default class Dashboard extends Base {
       ola_points = pt_metric.value;
     }
     return (
-      <div>
-        <div style={{height:'100vh', display:'flex', flexDirection:'column'}}>
+      <div style={{height:'100%'}}>
+        <div style={{height:'100%', display:'flex', flexDirection:'column'}}>
           <div className="user-profile" style={{backgroundColor: others.grey800, borderBottom:'2px solid ' + OLA, padding:'0 1em'}}>
             <Link to={'/dashboard'} style={{display:'flex', height:'100%', color: others.white, textDecoration:'none'}}>
               <div className="avatar" style={{borderRadius:'50%', width: user.avatar.medium.width, height: user.avatar.medium.height, overflow:'hidden', flexGrow:0, margin:'1em 0'}}>
@@ -97,11 +97,11 @@ export default class Dashboard extends Base {
               </div>
             </Link>
           </div>
-          <div className="MAP" style={{flex:'1 0 300px'}}>
+          <div className="MAP" style={{flex:'1 0 auto'}}>
             <RideMap onChangeLocation={this.changePt} />
           </div>
           <div className="ride-status">
-            <FlatButton label="Ride Now" diable={this.state.rideAvailable} style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
+            <FlatButton label="Ride Now" disable={this.state.rideAvailable} style={{backgroundColor:others.black, color:OLA, width:'100%', borderRadius:0, padding:'1em 0'}}/>
           </div>
         </div>
       </div>
