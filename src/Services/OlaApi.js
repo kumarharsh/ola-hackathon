@@ -8,7 +8,7 @@ var uid = -1;
 var c_access_token = null;
 
 var LOGOUT_ENDPOINT = 'https://playlyfe.com/logout';
-var API_ENDPOINT = 'http://sandbox-t.olacabs.com';
+var API_ENDPOINT = '/ola';
 var OAUTH_URL = 'http://sandbox-t.olacabs.com/oauth2/authorize';
 
 // Utility functions
@@ -195,6 +195,7 @@ export default {
     };
 
     this.logout = function(callback) {
+      console.log('logout')
       // this.api('/logout','POST', callback);
       Cookie.remove(c_access_token);
     };

@@ -1,10 +1,50 @@
 import React from 'react/addons';
 import Base from './Base';
+import { AppBar, LeftNav, MenuItem } from 'material-ui';
 
 export default class App extends Base {
+
+  constructor() {
+    super()
+    this.showMenu = () => {
+      this.refs.leftNav.toggle()
+    }
+  }
+
+  // componentDidMount() {
+    // this.refs.leftNav.toggle();
+  // }
+
   render() {
+    var menuItems = [
+      { type: MenuItem.Types.LINK, text: 'Dashboard', payload: '/dashboard' },
+      { type: MenuItem.Types.LINK, text: 'Profile', payload: '/profile' },
+      { type: MenuItem.Types.LINK, text: 'Schedule', payload: '/schedule' },
+      { type: MenuItem.Types.LINK, text: 'Driver', payload: '/driver' },
+      { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+      {
+         type: MenuItem.Types.LINK,
+         payload: 'https://playlyfe.com',
+         text: 'Playlyfe'
+      },
+      { type: MenuItem.Types.SUBHEADER, text: '' },
+      {
+         type: MenuItem.Types.LINK,
+         payload: '/logout',
+         text: 'Logout'
+      },
+    ]
+    var name = this.props.location.pathname.replace('/', '')
+    if (name === '') {
+      name = 'Dashboard'
+    }
+    name = name.charAt(0).toUpperCase() + name.slice(1);
     return (
-      <div>{this.props.children}</div>
+      <div>
+        <AppBar title={name} onLeftIconButtonTouchTap={this.showMenu}/>
+        <LeftNav ref="leftNav" docked={false} menuItems={menuItems} />
+        {this.props.children}
+      </div>
     );
   }
 }

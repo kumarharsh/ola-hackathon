@@ -1,7 +1,7 @@
 import React from 'react';
 import Base from '../../Base';
 
-import { AppBar, List, ListItem } from 'material-ui';
+import { List, ListItem } from 'material-ui';
 import fetch from 'isomorphic-fetch';
 
 var client_located_url = 'http://ts1­phoenix­proxy­api­1848854956.us­east­1.elb.amazonaws.com/v1/sandbox/client_located?crn=656';
@@ -34,7 +34,6 @@ export default class Driver extends Base {
   render() {
     return (
       <div>
-        <AppBar title="Driver"/>
         <List>
           <ListItem primaryText="Locate Client" onTouchTap={this.clientLocated} />
           <ListItem primaryText="Ready for Booking" onTouchTap={this.ready} />

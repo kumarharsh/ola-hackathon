@@ -8,8 +8,10 @@ import history from 'history'
 
 export default class Reward extends Base {
 
-  constructor() {
+  constructor(props) {
     super()
+    console.log(props)
+    console.log(props.routes[0].component)
     this.state = { value: 60 }
     this.shareTweet = () => {
       this.refs.tw_modal.show()
@@ -92,7 +94,6 @@ export default class Reward extends Base {
     )
     return (
       <div>
-        <AppBar title="Reward"/>
         <div className="schedule-wrapper" style={{padding:'0.1em 0', textAlign:'center', backgroundColor: others.amber500, color:others.white}}>
           <CircularProgress mode="determinate" value={this.state.value} size={5} />
           <RaisedButton

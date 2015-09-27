@@ -9,8 +9,8 @@ import Profile from './components/Profile';
 import Schedule from './components/Schedule';
 
 import { Router, Route, Redirect, IndexRoute } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
 import OlaApi from './Services/OlaApi';
+import History from './Services/hist';
 import fetch from 'isomorphic-fetch';
 import injectTapEventPlugin from "react-tap-event-plugin";
 
@@ -45,12 +45,11 @@ function requireAuth(nextState, replaceState) {
             body: JSON.stringify(data)
           })
           .then(() => {
-            // this.props = {}
-            history.replaceState(null, '/feedback') // TODO change route
+            History.replaceState(null, '/feedback')
           })
         }
       });
-    }, 5000);
+    }, 15000);
   }
 }
 
@@ -66,19 +65,18 @@ class Logout extends React.Component {
 }
 
 React.render(
-  <Router history={createBrowserHistory()}>
+  <Router history={History}>
     <Route path="/" component={App} onEnter={requireAuth}>
-      <Redirect from="/team34" to="/" />
+      <Redirect from="/team34" to="/dashboard" />
       {/* authorized routes */}
-      <Route path="/" component={Dashboard}/>
       <Route path="/dashboard" component={Dashboard}/>
       <Route path="/schedule" component={Schedule}/>
       <Route path="/profile" component={Profile} />
+      <Route path="/feedback" component={Feedback} />
+      <Route path="/reward" component={Reward} />
+      <Route path="/driver" component={Driver} />
       <Route path="/logout" component={Logout} onEnter={logout} />
     </Route>
-    <Route path="/feedback" component={Feedback} />
-    <Route path="/reward" component={Reward} />
-    <Route path="/driver" component={Driver} />
     <Route path="/login" component={Login} />
   </Router>,
   document.getElementById('root')

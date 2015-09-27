@@ -65,7 +65,6 @@ export default class Dashboard extends Base {
 
     return (
       <div>
-        <AppBar title="Schedule"/>
         <div style={{display: !this.state.formOpen ? null : 'none'}}>
           <List>
             { scheduleList.map((item) => <ListItem primaryText={item.text} />) }

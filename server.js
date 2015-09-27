@@ -158,8 +158,6 @@ app.post('/tweet_on_twitter', function(req, res) {
 })
 
 app.get('/history', function(req, res) {
-  // tracks_mgc.find({ user_id: req.session.user_id, year: 2015 }).toArray(function(err, docs) {
-  // });
   calculateStreak(req, function(err, count) {
     if (err) {
       return res.status(500).json({err: err})

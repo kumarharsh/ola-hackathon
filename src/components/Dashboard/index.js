@@ -7,7 +7,7 @@ import { OLA, others } from '../../colors';
 import Flame from '../Streak/Flame';
 import RideMap from './RidesMap';
 
-export default class App extends Base {
+export default class Dashboard extends Base {
   render() {
     var user = {
       name: 'Kumar Harsh',
