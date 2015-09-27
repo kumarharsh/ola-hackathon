@@ -131,7 +131,7 @@ function playAction(action_id, variables, req, res) {
     }
     variables.streak = count
     pl.post('/runtime/actions/'+action_id+'/play', { player_id: req.session.user_id }, { variables: variables })
-    .then(function(){ res.status(200).json({ ok: 1}) })
+    .then(function(data){ res.status(200).json(data) })
     .catch(function(err){res.status(500).json({err: err})})
   })
 }
